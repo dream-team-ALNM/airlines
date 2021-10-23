@@ -1,0 +1,3 @@
+const Account: React.FC = () => <h1>Account</h1>;
+
+export default Account;
