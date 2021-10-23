@@ -49,7 +49,10 @@ const BuyTickets: React.FC = () => {
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         <img
           src={airplaneSeats}
-          className={getAllowedClasses(styles.airplaneSeatsImage)}
+          className={getAllowedClasses(
+            styles.airplaneSeatsImage,
+            'shadow rounded',
+          )}
         />
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <SelectFromTo

@@ -11,7 +11,10 @@ const Info: React.FC = () => (
     <Label name="Company Info" iconPath={infoIcon} />
     <img
       src={infoAirplane}
-      className={getAllowedClasses(styles.infoPlaneImage)}
+      className={getAllowedClasses(
+        styles.infoPlaneImage,
+        'shadow rounded',
+      )}
     />
     <div
       className={getAllowedClasses(
