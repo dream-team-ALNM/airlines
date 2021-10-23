@@ -30,6 +30,7 @@
     "express": "4.17.1",
     "jsonwebtoken": "8.5.1",
     "jwks-rsa": "1.11.0",
+    "mongoose": "5.12.3",
     "pg": "8.5.1",
     "pino": "7.0.0-rc.1",
     "pino-pretty": "5.1.2",

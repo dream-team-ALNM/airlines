@@ -8,4 +8,9 @@ export const env = {
     port: getOsEnv('PORT'),
     secretKey: getOsEnv('APP_SECRET'),
   },
+
+  db: {
+    cluster: getOsEnv('CLUSTER'),
+    password: getOsEnv('DB_PASSWORD'),
+  },
 } as const;

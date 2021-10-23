@@ -5,6 +5,7 @@ import express, { Express } from 'express';
 import { env } from './env';
 import routes from './api/routes';
 import { logger } from './common/utils/logger.util';
+import './data/db/airlines';
 
 const { port } = env.app;
 
