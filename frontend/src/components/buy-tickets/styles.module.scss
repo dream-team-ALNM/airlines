@@ -1,5 +1,19 @@
-.airplaneSeatsImage {
-  width: 68%;
-  margin: 2%;
-  border: 2px solid gray;
+.buyTicketsContainer {
+  display: flex;
+  flex-flow: row wrap;
+
+  .airplaneSeatsImage {
+    width: 68%;
+    margin: 2%;
+    border: 2px solid gray;
+  }
+
+  .buyTicketsForms {
+    padding: 2rem;
+    .buyTicketsFrom {
+      background-color: #e8ebed !important;
+      border: 1px solid #e8ebed;
+      color: black;
+    }
+  }
 }
