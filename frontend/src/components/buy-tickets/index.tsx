@@ -11,7 +11,7 @@ const BuyTickets: React.FC = () => (
     <Label name="Buy Tickets" iconPath={buyTicketsIcon} />
     <img
       src={airplaneSeats}
-      className={getAllowedClasses(styles.airplaneSeats)}
+      className={getAllowedClasses(styles.airplaneSeatsImage)}
     />
   </>
 );
