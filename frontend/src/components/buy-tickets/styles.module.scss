@@ -1,30 +1,42 @@
-.airplaneSeatsImage {
-  width: 1000px;
-  margin: 1.4rem;
-  border: 2px solid gray;
+.buyTicketsContainer {
+  display: flex;
+  flex-flow: row wrap;
 
-  @media only screen and (max-width: 1200px) {
-    width: 800px;
+  .airplaneSeatsImage {
+    width: 1000px;
+    margin: 1.4rem;
+    border: 2px solid gray;
+
+    @media only screen and (max-width: 1200px) {
+      width: 800px;
+    }
+
+    @media only screen and (max-width: 1100px) {
+      width: 700px;
+    }
+
+    @media only screen and (max-width: 1000px) {
+      width: 600px;
+    }
+
+    @media only screen and (max-width: 900px) {
+      width: 500px;
+    }
+
+    @media only screen and (max-width: 800px) {
+      width: 400px;
+    }
+
+    @media only screen and (max-width: 600px) {
+      transform: rotate(90deg);
+      width: 100vw;
+    }
   }
 
-  @media only screen and (max-width: 1100px) {
-    width: 700px;
-  }
-
-  @media only screen and (max-width: 1000px) {
-    width: 600px;
-  }
-
-  @media only screen and (max-width: 900px) {
-    width: 500px;
-  }
-
-  @media only screen and (max-width: 800px) {
-    width: 400px;
-  }
-
-  @media only screen and (max-width: 600px) {
-    transform: rotate(90deg);
-    width: 100vw;
+  .buyTicketsForms {
+    padding: 2rem;
+    background-color: #e8ebed !important;
+    border: 1px solid #e8ebed;
+    color: black;
   }
 }
