@@ -9,13 +9,22 @@ export default {
 
   control: (provided: any): any => ({
     ...provided,
-    background: '#fff',
-    borderColor: '#9e9e9e',
+    background: '#C4C4C4',
     margin: '0.5rem 2rem',
     minHeight: '30px',
     height: '30px',
+    width: 270,
+    borderRadius: '0',
+    fontFamily:
+      // eslint-disable-next-line @typescript-eslint/quotes
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+    fontSize: 20,
+    paddingBottom: '2rem',
   }),
-
+  dropdownIndicator: (provided: any): any => ({
+    ...provided,
+    color: '8D8D8D',
+  }),
   valueContainer: (provided: any): any => ({
     ...provided,
     height: '30px',
@@ -38,5 +47,10 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+  }),
+
+  placeholder: (provided: any): any => ({
+    ...provided,
+    color: 'black',
   }),
 };

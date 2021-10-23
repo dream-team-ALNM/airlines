@@ -3,7 +3,7 @@ import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import airplaneSeats from '../../assets/img/airplane-seats.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import SelectFromTo from './select-from-to';
-// import SelectPlane from './select-plane';
+import SelectPlane from './select-plane';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
@@ -23,17 +23,32 @@ const BuyTickets: React.FC = () => {
 
   const getOptions = (): IOption[] | undefined => {
     return [
-      { value: 'Dnipro', label: 'Дніпро' },
-      { value: 'Donetsk', label: 'Донецьк' },
-      { value: 'Ivano-Frankivsk', label: 'Івано-Франківськ' },
-      { value: 'Kyiv-Borispil', label: 'Київ-Бориспіль' },
-      { value: 'Kyiv-Zhylani', label: 'Київ-Жуляни' },
-      { value: 'Lviv', label: 'Львів' },
-      { value: 'Odesa', label: 'Одеса' },
-      { value: 'Poltava', label: 'Полтава' },
-      { value: 'Chernovtsi', label: 'Черновці' },
-      { value: 'Charkiv', label: 'Харків' },
-      { value: 'Cherson', label: 'Херсон' },
+      { value: 'dnipro', label: 'Дніпро' },
+      { value: 'donetsk', label: 'Донецьк' },
+      { value: 'ivanoFrankivsk', label: 'Івано-Франківськ' },
+      { value: 'kyivBorispil', label: 'Київ-Бориспіль' },
+      { value: 'kyivZhylani', label: 'Київ-Жуляни' },
+      { value: 'lviv', label: 'Львів' },
+      { value: 'odesa', label: 'Одеса' },
+      { value: 'poltava', label: 'Полтава' },
+      { value: 'chernovtsi', label: 'Черновці' },
+      { value: 'charkiv', label: 'Харків' },
+      { value: 'cherson', label: 'Херсон' },
+    ];
+    // if (!repos) {
+    //   return;
+    // }
+    // return repos.map((repo) => ({
+    //   value: repo,
+    //   label: repo,
+    // }));
+  };
+  const getOptionsPlane = (): IOption[] | undefined => {
+    return [
+      { value: 'plane34RR', label: 'Plane-34RR' },
+      { value: 'plane55NN', label: 'Plane-55NN' },
+      { value: 'plane90ER', label: 'Plane-90ER' },
+      { value: 'plane23XX', label: 'Plane-23XX' },
     ];
     // if (!repos) {
     //   return;
@@ -56,7 +71,11 @@ const BuyTickets: React.FC = () => {
           )}
         />
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
-          {/* <SelectPlane /> */}
+          <SelectPlane
+            options={getOptionsPlane()}
+            handleSelectChange={handleSelectChange}
+            placeholder="Plane type"
+          />
           <SelectFromTo
             options={getOptions()}
             handleSelectChange={handleSelectChange}
