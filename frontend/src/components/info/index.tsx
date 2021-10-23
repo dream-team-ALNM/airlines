@@ -1,10 +1,10 @@
 import { Menu, Label } from 'components/common';
-import iconPath from '../../assets/img/logo.svg';
+import iconPath from '../../assets/img/info.png';
 
 const Info: React.FC = () => (
   <>
     <Menu />
-    <Label name="Info" iconPath={iconPath} />
+    <Label name="Company Info" iconPath={iconPath} />
     <h1>Info</h1>
   </>
 );
