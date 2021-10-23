@@ -21,7 +21,8 @@ const Menu: React.FC = () => (
           className={getAllowedClasses(styles.menuImage)}
         />
         <span className={getAllowedClasses(styles.menuName)}>
-          Купівля авіабілетів &quot;Ukraine Airways&quot;
+          <span>Купівля авіабілетів </span>
+          <span>&quot;Ukraine Airways&quot;</span>
         </span>
       </div>
     </Link>
