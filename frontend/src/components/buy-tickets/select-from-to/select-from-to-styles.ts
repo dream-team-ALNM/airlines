@@ -13,7 +13,7 @@ export default {
     margin: '0.5rem 2rem',
     minHeight: '30px',
     height: '30px',
-    width: 270,
+    width: 260,
     borderRadius: '0',
     fontFamily:
       // eslint-disable-next-line @typescript-eslint/quotes

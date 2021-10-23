@@ -9,9 +9,14 @@
   .labelImage {
     width: 38px;
   }
+
   .labelName {
     padding: 0 1rem;
     font-size: 28px;
     font-weight: 500;
+  }
+
+  @media only screen and (max-width: 500px) {
+    width: 80%;
   }
 }
