@@ -7,11 +7,11 @@ type Props = {
   iconPath: string;
 };
 
-const Link: React.FC<Props> = ({ name, iconPath }) => (
+const Label: React.FC<Props> = ({ name, iconPath }) => (
   <div className={getAllowedClasses(styles.labelContainer)}>
     <img src={iconPath} className={getAllowedClasses(styles.labelImage)} />
     <span className={getAllowedClasses(styles.labelName)}>{name}</span>
   </div>
 );
 
-export default Link;
+export default Label;
