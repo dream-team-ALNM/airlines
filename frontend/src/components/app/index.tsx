@@ -5,6 +5,7 @@ import Account from 'components/account';
 import BuyTickets from 'components/buy-tickets';
 import Login from 'components/login';
 import SignUp from 'components/sign-up';
+import NotFound from 'components/not-found';
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const App: React.FC = () => {
       <Route path={AppRoute.ACCOUNT} component={Account} exact />
       <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
       <Route path={AppRoute.ROOT} component={BuyTickets} exact />
-      {/* <Route path="*" component={NotFound} /> */}
+      <Route path="*" component={NotFound} />
     </Switch>
   );
 };
