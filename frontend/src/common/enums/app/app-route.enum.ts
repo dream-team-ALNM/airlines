@@ -2,9 +2,8 @@ enum AppRoute {
   ROOT = '/',
   LOGIN = '/login',
   SIGN_UP = '/signup',
-  WORKSPACES = '/workspaces',
-  PAGES = '/pages',
-  SETTINGS_PROFILE = '/settings/profile',
+  INFO = '/info',
+  ACCOUNT = '/account',
 }
 
 export { AppRoute };

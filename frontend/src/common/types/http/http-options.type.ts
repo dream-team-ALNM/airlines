@@ -1,4 +1,4 @@
-import { ContentType, HttpMethod } from 'common/enums/enums';
+import { ContentType, HttpMethod } from '../../enums';
 
 type HttpOptions = {
   method: HttpMethod;
