@@ -1,0 +1,25 @@
+.menuContainer {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8rem;
+  background-color: #cbdbea;
+  margin-bottom: 25px;
+
+  .menuNameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .menuImage {
+      width: 8%;
+    }
+
+    .menuName {
+      font-size: 30px;
+      font-weight: 700;
+      color: #515d72;
+    }
+  }
+}
