@@ -10,7 +10,6 @@ export default {
   control: (provided: any): any => ({
     ...provided,
     background: '#E8EBED',
-    margin: '0.5rem 2rem',
     minHeight: '30px',
     height: '30px',
     width: 260,

@@ -4,6 +4,7 @@ import airplaneSeats from '../../assets/img/airplane-seats.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import SelectFromTo from './select-from-to';
 import SelectPlane from './select-plane';
+import Button from 'react-bootstrap/Button';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
@@ -86,6 +87,13 @@ const BuyTickets: React.FC = () => {
             handleSelectChange={handleSelectChange}
             placeholder="To"
           />
+          <input placeholder="Full Name" />
+          <br />
+          <input placeholder="Start Date&amp;Time" />
+          <br />
+          <input placeholder="End Date&amp;Time" />
+          <div>Price</div>
+          <Button variant="success">buy</Button>
         </div>
       </div>
     </>
