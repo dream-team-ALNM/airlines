@@ -1,3 +1,10 @@
-const Login: React.FC = () => <h1>Login</h1>;
+import { Menu } from 'components/common';
+
+const Login: React.FC = () => (
+  <>
+    <Menu />
+    <h1>Login</h1>
+  </>
+);
 
 export default Login;
