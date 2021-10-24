@@ -2,6 +2,12 @@
   display: flex;
   flex-flow: row wrap;
 
+  @media only screen and (max-width: 800px) {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .airplaneSeatsImage {
     width: 900px;
     margin: 1.4rem;
@@ -38,13 +44,7 @@
 
   .buyTicketsForms {
     margin: 0 1.4rem;
-
-
-    .buyTicketsFrom {
-      background-color: #e8ebed !important;
-      border: 1px solid #e8ebed;
-      color: black;
-    }
+    margin-bottom: 2rem;
 
     input {
       width: 260px;
