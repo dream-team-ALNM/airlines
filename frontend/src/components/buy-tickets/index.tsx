@@ -1,6 +1,7 @@
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import airplaneSeats from '../../assets/img/airplane-seats.png';
+import airplaneSeatsMobile from '../../assets/img/airplane-seats-mobile.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import SelectFromTo from './select-from-to';
 import SelectPlane from './select-plane';
@@ -59,18 +60,24 @@ const BuyTickets: React.FC = () => {
     //   label: repo,
     // }));
   };
+
   return (
     <>
       <Menu />
       <Label name="Buy Tickets" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
-        <img
-          src={airplaneSeats}
-          className={getAllowedClasses(
-            styles.airplaneSeatsImage,
-            'shadow rounded',
-          )}
-        />
+        <picture>
+          <source media="(max-width: 599px)" srcSet={airplaneSeatsMobile} />
+          <source media="(min-width: 600px)" srcSet={airplaneSeats} />
+          <img
+            src={airplaneSeats}
+            alt="Plane schema"
+            className={getAllowedClasses(
+              styles.airplaneSeatsImage,
+              'shadow rounded',
+            )}
+          />
+        </picture>
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <SelectPlane
             options={getOptionsPlane()}
