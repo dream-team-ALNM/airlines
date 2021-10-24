@@ -92,8 +92,10 @@ const BuyTickets: React.FC = () => {
           <input placeholder="Start Date&amp;Time" />
           <br />
           <input placeholder="End Date&amp;Time" />
-          <div>Price</div>
-          <Button variant="success">buy</Button>
+          <div className={getAllowedClasses(styles.priceField)}>Price</div>
+          <div className={getAllowedClasses(styles.buttonContainer)}>
+            <Button variant="success">buy</Button>
+          </div>
         </div>
       </div>
     </>

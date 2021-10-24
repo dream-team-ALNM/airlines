@@ -7,6 +7,11 @@ export default {
     padding: '0.2rem',
   }),
 
+  container: (provided: any): any => ({
+    ...provided,
+    marginBottom: '0px !important',
+  }),
+
   control: (provided: any): any => ({
     ...provided,
     background: '#C4C4C4',
@@ -20,10 +25,12 @@ export default {
     fontSize: 20,
     paddingBottom: '2rem',
   }),
+
   dropdownIndicator: (provided: any): any => ({
     ...provided,
     color: '8D8D8D',
   }),
+
   valueContainer: (provided: any): any => ({
     ...provided,
     height: '30px',

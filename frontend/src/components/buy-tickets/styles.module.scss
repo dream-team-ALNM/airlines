@@ -1,8 +1,6 @@
 .buyTicketsContainer {
   display: flex;
   flex-flow: row wrap;
-  margin: 0 1.4rem;
-  justify-content: space-around;
 
   .airplaneSeatsImage {
     width: 900px;
@@ -40,6 +38,37 @@
       background-color: #e8ebed !important;
       border: 1px solid #e8ebed;
       color: black;
+    }
+
+    input {
+      width: 260px;
+      background-color: #e8ebed;
+      border: 1px solid rgb(196, 194, 194);
+      min-height: 30px;
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      padding: 0.1rem;
+      padding-left: 0.6rem;
+
+      :first-child {
+        margin-top: 1.5rem;
+      }
+    }
+    .priceField {
+      width: 260px;
+      background-color: #e8ebed;
+      border: 1px solid rgb(196, 194, 194);
+      min-height: 30px;
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      padding: 0.1rem;
+      padding-left: 0.6rem;
+      color: gray;
+    }
+    .buttonContainer {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
     }
   }
 }

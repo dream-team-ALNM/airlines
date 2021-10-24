@@ -21,6 +21,11 @@ export default {
     paddingBottom: '2rem',
   }),
 
+  container: (provided: any): any => ({
+    ...provided,
+    marginBottom: '0px !important',
+  }),
+
   valueContainer: (provided: any): any => ({
     ...provided,
     height: '30px',
@@ -43,10 +48,5 @@ export default {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-  }),
-
-  placeholder: (provided: any): any => ({
-    ...provided,
-    color: 'black',
   }),
 };
