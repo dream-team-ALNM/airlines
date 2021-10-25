@@ -7,29 +7,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f6fdff;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: 11px;
   }
-  
+
   &::-webkit-scrollbar-track {
     box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
     background-color: #f9f9fd;
     -webkit-border-radius: 10px;
     border-radius: 10px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
     background-color: #f1ef50;
     -webkit-border-radius: 10px;
     border-radius: 10px;
-    background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, .25) 25%,
-                      transparent 25%,
-                      transparent 50%,
-                      rgba(255, 255, 255, .25) 50%,
-                      rgba(255, 255, 255, .25) 75%,
-                      transparent 75%,
-                      transparent);
+    background-image: -webkit-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.25) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0.25) 75%,
+      transparent 75%,
+      transparent
+    );
   }
 }
 

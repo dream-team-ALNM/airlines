@@ -1,0 +1,24 @@
+.vacant {
+  background-color: #c2d700;
+}
+.occupied {
+  background-color: #da2d2d;
+}
+.selected {
+  background-color: #28a745;
+}
+
+.vacant,
+.occupied,
+.selected {
+  padding: 0;
+  margin: 0;
+  font-size: 0.6em;
+  border-radius: 0.5em;
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  &:focus {
+    outline: 1px solid #555;
+  }
+}

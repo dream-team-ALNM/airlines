@@ -1,0 +1,23 @@
+.generalGrid {
+  position: relative;
+  width: 100%;
+  height: 33%;
+  display: grid;
+  grid-template-rows: 2fr 1fr 2fr;
+  .topSeatsGrid,
+  .bottomSeatsGrid,
+  .rowNumbersGrid {
+    display: grid;
+    align-items: center;
+  }
+  .rowNumbersGrid {
+    justify-items: stretch;
+    justify-content: space-between;
+    small {
+      font-weight: bolder;
+      font-size: 0.8em;
+      color: #333;
+      text-align: center;
+    }
+  }
+}

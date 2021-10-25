@@ -1,10 +1,11 @@
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
-import airplaneSeats from '../../assets/img/airplane-seats.png';
-import airplaneSeatsMobile from '../../assets/img/airplane-seats-mobile.png';
+// import airplaneSeats from '../../assets/img/airplane-seats.png';
+// import airplaneSeatsMobile from '../../assets/img/airplane-seats-mobile.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import SelectFromTo from './select-from-to';
 import SelectPlane from './select-plane';
+import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { getAllowedClasses } from 'helpers';
 
@@ -66,18 +67,9 @@ const BuyTickets: React.FC = () => {
       <Menu />
       <Label name="Buy Tickets" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
-        <picture>
-          <source media="(max-width: 599px)" srcSet={airplaneSeatsMobile} />
-          <source media="(min-width: 600px)" srcSet={airplaneSeats} />
-          <img
-            src={airplaneSeats}
-            alt="Plane schema"
-            className={getAllowedClasses(
-              styles.airplaneSeatsImage,
-              'shadow rounded',
-            )}
-          />
-        </picture>
+        <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
+          <PlaneSeatsGrid seatsCount={78} businessSeatsCount={4} />
+        </div>
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <SelectPlane
             options={getOptionsPlane()}
