@@ -17,7 +17,7 @@ type Props = {
 const PlaneSeatButton: React.FC<Props> = ({ seatState, seatLabel }) => {
   return (
     <button className={getAllowedClasses(styles[seatState])}>
-      {seatLabel}
+      <p>{seatLabel}</p>
     </button>
   );
 };

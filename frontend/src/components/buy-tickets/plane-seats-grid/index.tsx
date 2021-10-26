@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { getAllowedClasses } from 'helpers';
 
@@ -32,6 +33,7 @@ const PlaneSeatsGrid: React.FC<Props> = ({
     (acc, column) => [...acc, ...column],
     [],
   );
+
   const topSeats: Array<string> = seats.slice(0, seatsCount / 2 + 1);
   const bottomSeats: Array<string> = seats.slice(
     seatsCount / 2 + 1,
