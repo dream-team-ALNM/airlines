@@ -1,7 +1,5 @@
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
-// import airplaneSeats from '../../assets/img/airplane-seats.png';
-// import airplaneSeatsMobile from '../../assets/img/airplane-seats-mobile.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import SelectFromTo from './select-from-to';
 import SelectPlane from './select-plane';

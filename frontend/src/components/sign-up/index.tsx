@@ -1,7 +1,5 @@
-const SignUp: React.FC = () => (
-  <>
-    <h1>SignUp</h1>
-  </>
-);
+import SignForm from '../common/sign-form';
+
+const SignUp: React.FC = () => <SignForm formHeader="Sign up" />;
 
 export default SignUp;
