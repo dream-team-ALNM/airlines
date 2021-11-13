@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export default (containerWidth: string, selectHeight: string, selectFontSize: string): any => ({
+export default (
+  containerWidth: string,
+  selectHeight: string,
+  selectFontSize: string,
+): any => ({
   option: (provided: any): any => ({
     ...provided,
     fontSize: selectFontSize,
@@ -29,6 +33,7 @@ export default (containerWidth: string, selectHeight: string, selectFontSize: st
 
   valueContainer: (provided: any): any => ({
     ...provided,
+    height: selectHeight,
     padding: '0 6px',
   }),
 
@@ -58,6 +63,7 @@ export default (containerWidth: string, selectHeight: string, selectFontSize: st
 
   clearIndicator: (provided: any): any => ({
     ...provided,
+    color: '8D8D8D',
     padding: '0px',
   }),
 

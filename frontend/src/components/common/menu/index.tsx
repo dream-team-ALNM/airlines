@@ -20,7 +20,7 @@ const Menu: React.FC = () => {
 
   const onExit = (): void => {
     localStorage.removeItem('user');
-    push(AppRoute.LOGIN);
+    push(AppRoute.ROOT);
   };
   return (
     <div className={getAllowedClasses(styles.menuContainer)}>
