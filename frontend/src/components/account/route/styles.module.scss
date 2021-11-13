@@ -1,0 +1,18 @@
+.routeContainer {
+  background-color: #e8ebed;
+  margin: 3%;
+  padding: 1%;
+  font-weight: 500;
+
+  .fromTo {
+    margin-left: 4%;
+  }
+  .startDate {
+    margin-left: 4%;
+    color: #28a745;
+  }
+  .endDate {
+    margin-left: 4%;
+    color: #bc3d22;
+  }
+}

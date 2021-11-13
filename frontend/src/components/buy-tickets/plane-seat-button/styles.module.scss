@@ -7,10 +7,14 @@
 .selected {
   background-color: #28a745;
 }
+.business {
+  background-color: #FDBD40;
+}
 
 .vacant,
 .occupied,
-.selected {
+.selected,
+.business {
   padding: 0;
   margin: 0;
   font-size: 0.6em;

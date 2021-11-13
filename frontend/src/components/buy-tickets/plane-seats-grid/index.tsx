@@ -3,16 +3,17 @@ import React from 'react';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
-import PlaneSeatButton, { seatStates } from '../plane-seat-button';
+import PlaneSeatButton from '../plane-seat-button';
+import { seatStates } from 'common/enums/seats';
 
 type Props = {
   seatsCount: number;
-  businessSeatsCount: number;
 };
+
+const businessSeats = ['A01', 'A02','B01', 'B02','C02', 'D02'];
 
 const PlaneSeatsGrid: React.FC<Props> = ({
   seatsCount,
-  businessSeatsCount,
 }) => {
   const rowsCount = (seatsCount + 2) / 4;
   const rows: Array<string> = [...Array(rowsCount).keys()].map((rowNum) =>
@@ -40,7 +41,7 @@ const PlaneSeatsGrid: React.FC<Props> = ({
     seatsCount,
   );
   // eslint-disable-next-line no-console
-  console.log(topSeats, bottomSeats, businessSeatsCount);
+  console.log(topSeats, bottomSeats);
   return (
     <div
       className={getAllowedClasses(styles.generalGrid)}
@@ -54,13 +55,16 @@ const PlaneSeatsGrid: React.FC<Props> = ({
           gridTemplateColumns: `repeat(${rowsCount}, 1fr)`,
         }}
       >
-        {topSeats.map((seatNum) => (
-          <PlaneSeatButton
-            key={seatNum}
-            seatLabel={seatNum}
-            seatState={seatStates.vacant}
-          />
-        ))}
+        {topSeats.map((seatNum) => {
+          const seatState = businessSeats.includes(seatNum)? seatStates.business : seatStates.vacant;
+          return(
+            <PlaneSeatButton
+              key={seatNum}
+              seatLabel={seatNum}
+              seatState={seatState}
+            />
+          );},
+        )}
       </section>
 
       <section
@@ -84,13 +88,16 @@ const PlaneSeatsGrid: React.FC<Props> = ({
           gridTemplateColumns: `repeat(${rowsCount - 1}, 1fr)`,
         }}
       >
-        {bottomSeats.map((seatNum) => (
-          <PlaneSeatButton
-            key={seatNum}
-            seatLabel={seatNum}
-            seatState={seatStates.vacant}
-          />
-        ))}
+        {bottomSeats.map((seatNum) => {
+          const seatState = businessSeats.includes(seatNum)? seatStates.business : seatStates.vacant;
+          return(
+            <PlaneSeatButton
+              key={seatNum}
+              seatLabel={seatNum}
+              seatState={seatState}
+            />
+          );},
+        )}
       </section>
     </div>
   );
