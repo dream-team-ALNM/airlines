@@ -64,7 +64,7 @@ const BuyTickets: React.FC = () => {
     <>
       <Menu />
       <Label
-        name="Купівля авіаквитків Ukraine Airways"
+        name="Купівля авіаквитків"
         iconPath={buyTicketsIcon}
       />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
@@ -88,9 +88,7 @@ const BuyTickets: React.FC = () => {
             placeholder="To"
           />
           <input placeholder="Full Name" />
-          <br />
           <input placeholder="Start Date&amp;Time" />
-          <br />
           <input placeholder="End Date&amp;Time" />
           <div className={getAllowedClasses(styles.priceField)}>Price</div>
           <div className={getAllowedClasses(styles.buttonContainer)}>
@@ -98,7 +96,7 @@ const BuyTickets: React.FC = () => {
           </div>
         </div>
       </div>
-      <p className={getAllowedClasses('shadow p-3 mb-5 bg-white rounded')}>
+      <p className={getAllowedClasses('px-4')}>
         За допомогою нашого сайту ви легко зможете купити квитки Ukraine
         Airways. Наші літаки літають за всіма найпопулярнішими напрямками,
         такими як, Дніпро Київ, Львів Київ, Харків Київ. Тож, бажаючі придбати
