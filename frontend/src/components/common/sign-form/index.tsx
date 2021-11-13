@@ -15,7 +15,7 @@ const SignForm: React.FC<Props> = ({ formHeader }) => (
     {formHeader === 'Sign in' ? (
       <>
         <input placeholder="Email"></input>
-        <input placeholder="Password"></input>
+        <input type="password" placeholder="Password"></input>
         <ConfirmButton name="Confirm" to={AppRoute.ACCOUNT} />
         <div className={getAllowedClasses(styles.linkFormContainer)}>
           <Link to={AppRoute.SIGN_UP}>Sign up</Link>
@@ -26,7 +26,7 @@ const SignForm: React.FC<Props> = ({ formHeader }) => (
         <input placeholder="Full Name"></input>
         <input placeholder="Age"></input>
         <input placeholder="Email"></input>
-        <input placeholder="Password"></input>
+        <input type="password" placeholder="Password"></input>
         <ConfirmButton name="Confirm" to={AppRoute.LOGIN} />
         <div className={getAllowedClasses(styles.linkFormContainer)}>
           <Link to={AppRoute.LOGIN}>Sign in</Link>
