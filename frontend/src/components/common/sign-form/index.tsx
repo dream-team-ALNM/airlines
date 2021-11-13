@@ -38,7 +38,7 @@ const SignForm: React.FC<Props> = ({ formHeader }) => {
           <input
             placeholder="Password"
             name="password"
-            type="string"
+            type="password"
             value={inputs.password}
             onChange={handleInputChange}
           ></input>
@@ -73,7 +73,7 @@ const SignForm: React.FC<Props> = ({ formHeader }) => {
           <input
             placeholder="Password"
             name="password"
-            type="string"
+            type="password"
             value={inputs.password}
             onChange={handleInputChange}
           ></input>

@@ -1,18 +1,19 @@
 .buyTicketsContainer {
   padding: 1em 1.4rem;
   width: 100%;
-  height: 32em;
+  height: 40vw;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
 
-  @media only screen and (max-width: 800px) {
+  @media only screen and (max-width: 850px) {
     width: 100vw;
+    height: auto;
   }
   @media only screen and (max-width: 600px) {
-    height: 213vw;
     padding-right: 1.9rem;
   }
+
   .buyTicketsPlaneSchema {
     width: 75%;
     height: 100%;
@@ -27,6 +28,7 @@
 
     @media only screen and (max-width: 850px) {
       width: 100%;
+      height: 50vw;
       padding-left: 30%;
       padding-right: 1%;
     }
@@ -34,7 +36,7 @@
     @media only screen and (max-width: 600px) {
       background: url('../../assets/img/airplane-seats-mobile.jpg');
       width: 100%;
-      height: 100%;
+      height: 213vw;
       background-position: center;
       background-size: 100%;
       background-repeat: no-repeat;
@@ -45,37 +47,77 @@
 
   .buyTicketsForms {
     margin: 0 1.4rem;
-    margin-bottom: 2rem;
+    padding: 0.95rem 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (max-width: 850px) {
+      height: 60vw;
+      width: 100%;
+      margin: 0;
+    }
+    @media only screen and (max-width: 600px) {
+      height: 80vw;
+    }
 
     input {
-      width: 260px;
+      width: 17vw;
       background-color: #e8ebed;
       border: 1px solid rgb(196, 194, 194);
-      min-height: 30px;
-      margin-top: 1.5rem;
-      font-size: 1.25rem;
+      min-height: 20px;
+      font-size: 1.25vw;
       padding: 0.1rem;
       padding-left: 0.6rem;
+      height: 2.2vw;
 
-      :first-child {
-        margin-top: 1.5rem;
+      @media only screen and (max-width: 850px) {
+        width: 50vw;
+        height: 4vw;
+        font-size: 2vw;
+      }
+
+      @media only screen and (max-width: 600px) {
+        width: 80vw;
+        height: 6vw;
+        font-size: 3vw;
       }
     }
-    .priceField {
-      width: 260px;
+
+    .priceField,
+    .endDateField {
+      width: 17vw;
       background-color: #e8ebed;
       border: 1px solid rgb(196, 194, 194);
-      min-height: 30px;
-      margin-top: 1.5rem;
-      font-size: 1.25rem;
+      min-height: 20px;
+      font-size: 1.25vw;
       padding: 0.1rem;
       padding-left: 0.6rem;
       color: gray;
+      height: 2.2vw;
+
+      @media only screen and (max-width: 850px) {
+        width: 50vw;
+        height: 4vw;
+        font-size: 2vw;
+      }
+
+      @media only screen and (max-width: 600px) {
+        width: 80vw;
+        height: 6vw;
+        font-size: 3vw;
+      }
     }
+
     .buttonContainer {
       display: flex;
       justify-content: center;
-      margin-top: 1.5rem;
+
+      button {
+        padding: 0.375vw 0.75vw;
+      }
     }
   }
 }

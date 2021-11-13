@@ -8,6 +8,7 @@ import SignUp from 'components/sign-up';
 import NotFound from 'components/not-found';
 
 const App: React.FC = () => {
+  localStorage.setItem('user', 'sdkgksg'); //
   return (
     <Switch>
       <Route path={AppRoute.LOGIN} component={Login} exact />

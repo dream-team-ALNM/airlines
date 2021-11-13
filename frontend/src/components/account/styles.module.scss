@@ -1,0 +1,65 @@
+.accountContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .accountContainerInfo {
+    width: 15%;
+    margin: 2%;
+
+    .avatar img {
+      border: 5px solid #85baec;
+      background-color: #cbdbea;
+    }
+
+    .typeOfUser {
+      width: 100%;
+      padding: 1.5%;
+      background-color: #28a745;
+      color: white;
+      font-weight: 500;
+      font-size: 1.5rem;
+      vertical-align: middle;
+      text-align: center;
+      margin-top: 1em;
+    }
+  }
+
+  .userInfo {
+    // margin: 0 1.4rem;
+    margin-bottom: 2rem;
+    width: 25%;
+
+    input {
+      width: 90%;
+      background-color: #e8ebed;
+      border: 1px solid rgb(196, 194, 194);
+      min-height: 30px;
+      margin-top: 1.5rem;
+      font-size: 1.25rem;
+      padding: 0.1rem;
+      padding-left: 0.6rem;
+
+      :first-child {
+        margin-top: 1.5rem;
+      }
+    }
+  }
+
+  .containerList {
+    width: 60%;
+    .routesList {
+      background-color: #c4c4c4;
+      width: 96%;
+      min-height: 10vw;
+
+      overflow-y: scroll;
+
+      h3 {
+        width: 100%;
+        text-align: center;
+        padding-top: 3%;
+      }
+    }
+  }
+}

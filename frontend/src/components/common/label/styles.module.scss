@@ -16,7 +16,16 @@
     font-weight: 500;
   }
 
-  @media only screen and (max-width: 500px) {
-    width: 80%;
+  @media only screen and (max-width: 1000px) {
+    width: 65%;
+  }
+  @media only screen and (max-width: 800px) {
+    width: 83%;
+  }
+  @media only screen and (max-width: 600px) {
+    width: 90%;
+    .labelName {
+      font-size: 4vw;
+    }
   }
 }
