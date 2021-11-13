@@ -1,13 +1,8 @@
 import React from 'react';
+import { seatStates } from 'common/enums/seats';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
-
-export enum seatStates {
-  vacant = 'vacant',
-  occupied = 'occupied',
-  selected = 'selected',
-}
 
 type Props = {
   seatState: seatStates;
@@ -15,6 +10,7 @@ type Props = {
 };
 
 const PlaneSeatButton: React.FC<Props> = ({ seatState, seatLabel }) => {
+ 
   return (
     <button className={getAllowedClasses(styles[seatState])}>
       <p>{seatLabel}</p>

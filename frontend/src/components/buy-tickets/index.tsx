@@ -69,7 +69,7 @@ const BuyTickets: React.FC = () => {
       />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
-          <PlaneSeatsGrid seatsCount={78} businessSeatsCount={4} />
+          <PlaneSeatsGrid seatsCount={78} />
         </div>
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <SelectPlane
