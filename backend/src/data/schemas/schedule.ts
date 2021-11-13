@@ -4,9 +4,9 @@ const { ObjectId } = Schema.Types;
 
 const scheduleSchema = new Schema({
   _id: ObjectId,
-  plane_id: ObjectId,
-  start_date: String,
-  end_date: String,
+  planeID: ObjectId,
+  startDate: String,
+  endDate: String,
   from: ObjectId,
   to: ObjectId,
 });

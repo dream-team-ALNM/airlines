@@ -4,9 +4,9 @@ const { ObjectId } = Schema.Types;
 
 const ticketSchema = new Schema({
   _id: ObjectId,
-  user_id: ObjectId,
-  schedule_id: ObjectId,
+  userID: ObjectId,
+  scheduleID: ObjectId,
   price: Number,
-  place_number: Number,
+  placeNumber: Number,
 });
 export default ticketSchema;

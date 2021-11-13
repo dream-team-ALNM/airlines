@@ -6,6 +6,6 @@ const planesSchema = new Schema({
   _id: ObjectId,
   name: String,
   price: Number,
-  business_price: Number,
+  businessPrice: Number,
 });
 export default planesSchema;

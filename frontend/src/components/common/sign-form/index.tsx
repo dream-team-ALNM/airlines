@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import ConfirmButton from './button';
 import Link from '../../common/link';
@@ -7,6 +8,7 @@ import { useFormFields } from '../../../hooks';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
+import { AuthApi } from 'services';
 
 type Props = {
   formHeader: string;
@@ -21,6 +23,9 @@ const SignForm: React.FC<Props> = ({ formHeader }) => {
   const handleSubmitForm = (): void => {
     // eslint-disable-next-line no-console
     console.log(inputs);
+    formHeader === 'Sign in'
+      ? new AuthApi().loginUser(inputs as ILoginUser)
+      : new AuthApi().registerUser(inputs as IUser);
   };
 
   return (

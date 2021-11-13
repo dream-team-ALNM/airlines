@@ -1,9 +1,23 @@
-// import { IUserWithTokens } from 'common/interfaces/user';
+import { ContentType, HttpMethod } from 'common/enums';
+import { ILoginUser, IUser } from 'common/interfaces/user';
+import { Http } from './http.service';
 
 class AuthApi {
-  // eslint-disable-next-line
-  public async loginUser(loginPayload: any): Promise<any> {
-    return new Promise(resolve => setTimeout(() => resolve(loginPayload), 1000));
+  private BASE = '/api/auth';
+  public async loginUser(loginPayload: ILoginUser): Promise<IUser> {
+    return new Http().load(`${this.BASE}/login`, {
+      method: HttpMethod.POST,
+      payload: JSON.stringify(loginPayload),
+      contentType: ContentType.JSON,
+    });
+  }
+
+  public async registerUser(registerPayload: IUser): Promise<IUser> {
+    return new Http().load(`${this.BASE}/signup`, {
+      method: HttpMethod.POST,
+      payload: JSON.stringify(registerPayload),
+      contentType: ContentType.JSON,
+    });
   }
 }
 

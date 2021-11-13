@@ -1,10 +1,64 @@
 /* eslint-disable */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-// import { ObjectId } from 'mongoose';
-// import { userRepository } from '../data/repositories';
+import { hash, verify } from '../common/utils';
+import { userRepository } from '../data/repositories';
+import { HttpError } from '../common/errors';
+import { IUser, ILoginUser } from '../common/interfaces';
+import { HttpCode, HttpErrorMessage } from '../common/enums';
 
-export const register = async (body: any): Promise<any> => {
+export const login = async (body: ILoginUser): Promise<IUser> => {
   console.log(body);
-  //   await userRepository.create({ _id: 'fdfvfdvf' as ObjectId });
+
+  const user = await userRepository.getOne({
+    email: body.email.toLowerCase(),
+  });
+  if (!user || user.password === null) {
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: HttpErrorMessage.INVALID_LOGIN_DATA,
+    });
+  }
+
+  const isPasswordCorrect = await verify(body.password, user.password);
+  if (!isPasswordCorrect) {
+    throw new HttpError({
+      status: HttpCode.BAD_REQUEST,
+      message: HttpErrorMessage.INVALID_LOGIN_DATA,
+    });
+  }
+  return user as IUser;
+};
+
+export const register = async (body: ILoginUser): Promise<IUser> => {
+  console.log(body);
+  const existingUser = await userRepository.getOne({
+    email: body.email.toLowerCase(),
+  });
+
+  if (existingUser && existingUser.password !== null) {
+    throw new HttpError({
+      status: HttpCode.CONFLICT,
+      message: HttpErrorMessage.EMAIL_ALREADY_EXISTS,
+    });
+  }
+
+  const hashedPassword = await hash(body.password);
+  const userData = {
+    ...body,
+    email: body.email.toLowerCase(),
+    password: hashedPassword,
+  };
+
+  if (existingUser?.password === null) {
+    await userRepository.create({
+      fullName: existingUser.fullName,
+      age: existingUser.age,
+      email: existingUser.email.toLowerCase(),
+      ...userData,
+    });
+  } else {
+    await userRepository.create(userData);
+  }
+  return (await userRepository.getOne({
+    email: body.email.toLowerCase(),
+  })) as IUser;
 };

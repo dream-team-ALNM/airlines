@@ -4,9 +4,9 @@ const { ObjectId } = Schema.Types;
 
 const userSchema = new Schema({
   _id: ObjectId,
-  e_mail: String,
+  email: String,
   password: String,
-  full_name: String,
+  fullName: String,
   age: Number,
 });
 export default userSchema;
