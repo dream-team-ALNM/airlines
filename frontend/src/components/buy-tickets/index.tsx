@@ -5,8 +5,8 @@ import SelectFromTo from './select-from-to';
 import SelectPlane from './select-plane';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'hooks';
 import { getAllowedClasses } from 'helpers';
-
 import styles from './styles.module.scss';
 
 const BuyTickets: React.FC = () => {
@@ -14,6 +14,7 @@ const BuyTickets: React.FC = () => {
   //     (state) => state.github,
   //   );
   //   const dispatch = useAppDispatch();
+  const [inputDateType, setType] = useState('text');
   const handleSelectChange = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
     //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
@@ -63,10 +64,7 @@ const BuyTickets: React.FC = () => {
   return (
     <>
       <Menu />
-      <Label
-        name="Купівля авіаквитків"
-        iconPath={buyTicketsIcon}
-      />
+      <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
           <PlaneSeatsGrid seatsCount={78} />
@@ -88,8 +86,16 @@ const BuyTickets: React.FC = () => {
             placeholder="To"
           />
           <input placeholder="Full Name" />
-          <input placeholder="Start Date&amp;Time" />
-          <input placeholder="End Date&amp;Time" />
+          <input
+            type={inputDateType}
+            onFocus={(): void => setType('date')}
+            onBlur={(): void => setType('text')}
+            placeholder="Start Date&amp;Time"
+            lang="en-US"
+          />
+          <div className={getAllowedClasses(styles.endDateField)}>
+            End Date&amp;Time
+          </div>
           <div className={getAllowedClasses(styles.priceField)}>Price</div>
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
