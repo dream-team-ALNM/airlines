@@ -25,7 +25,7 @@ export const login = async (body: ILoginUser): Promise<IUser> => {
       message: HttpErrorMessage.INVALID_LOGIN_DATA,
     });
   }
-  return user as IUser;
+  return {...user, id: user._id} as IUser;
 };
 
 export const register = async (body: ILoginUser): Promise<IUser> => {
@@ -57,5 +57,5 @@ export const register = async (body: ILoginUser): Promise<IUser> => {
 
   console.log(createdUser);
 
-  return createdUser as IUser;
+  return {...createdUser, id: createdUser._id} as IUser;
 };

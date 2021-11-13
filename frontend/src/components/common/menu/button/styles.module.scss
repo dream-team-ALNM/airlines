@@ -14,15 +14,28 @@
   }
 
   @media only screen and (max-width: 1000px) {
-    width: 90px;
+    width: 80px;
   }
 
-  @media only screen and (max-width: 500px) {
+  @media only screen and (max-width: 750px) {
+    width: 60px;
+  }
+
+  @media only screen and (max-width: 550px) {
     width: 50px;
     height: 40px;
 
     .menuButtonImage {
       width: 30px;
+    }
+  }
+
+  @media only screen and (max-width: 460px) {
+    width: 40px;
+    height: 35px;
+
+    .menuButtonImage {
+      width: 25px;
     }
   }
 }

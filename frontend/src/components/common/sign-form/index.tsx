@@ -26,11 +26,12 @@ const SignForm: React.FC<Props> = ({ formHeader }) => {
     // eslint-disable-next-line no-console
     console.log(inputs);
     try {
-      if (formHeader === 'Sign in') {
-        await new AuthApi().loginUser(inputs as ILoginUser);
-      } else {
-        await new AuthApi().registerUser(inputs as IUser);
-      }
+      const user =
+        formHeader === 'Sign in'
+          ? await new AuthApi().loginUser(inputs as ILoginUser)
+          : await new AuthApi().registerUser(inputs as IUser);
+      console.log(user);
+      localStorage.setItem('user', user.id || '');
       push(AppRoute.ROOT);
     } catch (e) {
       alert((e as HttpError).message);
