@@ -4,28 +4,37 @@ import ConfirmButton from './button';
 import Link from '../../common/link';
 import { AppRoute } from 'common/enums';
 import { ILoginUser, IUser } from '../../../common/interfaces/user';
-import { useFormFields } from '../../../hooks';
+import { useFormFields, useHistory } from '../../../hooks';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
 import { AuthApi } from 'services';
+import { HttpError } from 'exceptions';
 
 type Props = {
   formHeader: string;
 };
 
 const SignForm: React.FC<Props> = ({ formHeader }) => {
+  const { push } = useHistory();
   const [inputs, handleInputChange] =
     formHeader === 'Sign in'
       ? useFormFields<ILoginUser>({ email: '', password: '' })
       : useFormFields<IUser>({ fullName: '', age: 0, email: '', password: '' });
 
-  const handleSubmitForm = (): void => {
+  const handleSubmitForm = async (): Promise<void> => {
     // eslint-disable-next-line no-console
     console.log(inputs);
-    formHeader === 'Sign in'
-      ? new AuthApi().loginUser(inputs as ILoginUser)
-      : new AuthApi().registerUser(inputs as IUser);
+    try {
+      if (formHeader === 'Sign in') {
+        await new AuthApi().loginUser(inputs as ILoginUser);
+      } else {
+        await new AuthApi().registerUser(inputs as IUser);
+      }
+      push(AppRoute.ROOT);
+    } catch (e) {
+      alert((e as HttpError).message);
+    }
   };
 
   return (
@@ -56,9 +65,9 @@ const SignForm: React.FC<Props> = ({ formHeader }) => {
         <>
           <input
             placeholder="Full Name"
-            name="full_name"
+            name="fullName"
             type="string"
-            value={inputs.full_name}
+            value={inputs.fullName}
             onChange={handleInputChange}
           ></input>
           <input

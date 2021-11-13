@@ -47,18 +47,15 @@ export const register = async (body: ILoginUser): Promise<IUser> => {
     email: body.email.toLowerCase(),
     password: hashedPassword,
   };
+  console.log(userData);
 
-  if (existingUser?.password === null) {
-    await userRepository.create({
-      fullName: existingUser.fullName,
-      age: existingUser.age,
-      email: existingUser.email.toLowerCase(),
-      ...userData,
-    });
-  } else {
-    await userRepository.create(userData);
-  }
-  return (await userRepository.getOne({
+  await userRepository.create(userData);
+
+  const createdUser = await userRepository.getOne({
     email: body.email.toLowerCase(),
-  })) as IUser;
+  });
+
+  console.log(createdUser);
+
+  return createdUser as IUser;
 };

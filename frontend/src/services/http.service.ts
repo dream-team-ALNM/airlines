@@ -11,7 +11,7 @@ class Http {
       const { method = HttpMethod.GET, payload = null, contentType } = options;
       const headers = this.getHeaders(contentType);
 
-      const response = await fetch(url, {
+      const response = await fetch(`http://localhost:3001${url}`, {
         method,
         headers,
         body: payload,
@@ -20,6 +20,8 @@ class Http {
 
       return this.parseJSON<T>(response);
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
       this.throwError(err as HttpError);
     }
   }
