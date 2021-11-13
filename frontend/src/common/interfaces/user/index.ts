@@ -1,3 +1,2 @@
-// export type { IUser, IUserWithTokens }
-const x = 'IUser';
-export { x };
+export * from './login-user.interface';
+export * from './user.interface';
