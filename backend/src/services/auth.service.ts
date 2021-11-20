@@ -6,8 +6,6 @@ import { IUser, ILoginUser } from '../common/interfaces';
 import { HttpCode, HttpErrorMessage } from '../common/enums';
 
 export const login = async (body: ILoginUser): Promise<IUser> => {
-  console.log(body);
-
   const user = await userRepository.getOne({
     email: body.email.toLowerCase(),
   });
@@ -29,7 +27,6 @@ export const login = async (body: ILoginUser): Promise<IUser> => {
 };
 
 export const register = async (body: ILoginUser): Promise<IUser> => {
-  console.log(body);
   const existingUser = await userRepository.getOne({
     email: body.email.toLowerCase(),
   });
@@ -47,15 +44,12 @@ export const register = async (body: ILoginUser): Promise<IUser> => {
     email: body.email.toLowerCase(),
     password: hashedPassword,
   };
-  console.log(userData);
 
   await userRepository.create(userData);
 
   const createdUser = await userRepository.getOne({
     email: body.email.toLowerCase(),
   });
-
-  console.log(createdUser);
 
   return {...createdUser, id: createdUser._id} as IUser;
 };

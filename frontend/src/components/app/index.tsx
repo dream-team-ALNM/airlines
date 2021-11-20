@@ -1,3 +1,5 @@
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AppRoute } from '../../common/enums';
 import { Switch, Route } from 'react-router-dom';
 import Info from 'components/info';
@@ -9,14 +11,17 @@ import NotFound from 'components/not-found';
 
 const App: React.FC = () => {
   return (
-    <Switch>
-      <Route path={AppRoute.LOGIN} component={Login} exact />
-      <Route path={AppRoute.INFO} component={Info} exact />
-      <Route path={AppRoute.ACCOUNT} component={Account} exact />
-      <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
-      <Route path={AppRoute.ROOT} component={BuyTickets} exact />
-      <Route path="*" component={NotFound} />
-    </Switch>
+    <>
+      <Switch>
+        <Route path={AppRoute.LOGIN} component={Login} exact />
+        <Route path={AppRoute.INFO} component={Info} exact />
+        <Route path={AppRoute.ACCOUNT} component={Account} exact />
+        <Route path={AppRoute.SIGN_UP} component={SignUp} exact />
+        <Route path={AppRoute.ROOT} component={BuyTickets} exact />
+        <Route path="*" component={NotFound} />
+      </Switch>
+      <ToastContainer />
+    </>
   );
 };
 

@@ -40,8 +40,7 @@ const PlaneSeatsGrid: React.FC<Props> = ({
     seatsCount / 2 + 1,
     seatsCount,
   );
-  // eslint-disable-next-line no-console
-  console.log(topSeats, bottomSeats);
+
   return (
     <div
       className={getAllowedClasses(styles.generalGrid)}
