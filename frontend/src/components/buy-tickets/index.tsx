@@ -22,6 +22,7 @@ const BuyTickets: React.FC = () => {
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [startTime, setStartTime] = useState<string>('');
+  const [selectedPlace, setSelectedPlace] = useState<string>('');
 
   const handleSelectChangeTo = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
@@ -62,12 +63,13 @@ const BuyTickets: React.FC = () => {
     });
     return result;
   };
+
   useEffect(() => {
     getOptions().then((result) => result && setAirports(result));
   }, []);
 
   const getTimeOptions = (): IOption[] | undefined => {
-    return [{ value: '22-00', label: '22-00' }];
+    return [{ value: '08:30', label: '08:30' }];
     // if (!repos) {
     //   return;
     // }
@@ -84,7 +86,7 @@ const BuyTickets: React.FC = () => {
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         {from && to && startTime ? (
           <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
-            <PlaneSeatsGrid seatsCount={78} />
+            <PlaneSeatsGrid seatsCount={78} onSeatClick={setSelectedPlace} selected={selectedPlace}/>
           </div>
         ) : (
           <img
@@ -118,7 +120,7 @@ const BuyTickets: React.FC = () => {
           />
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
           <div className={getAllowedClasses(styles.endDateField)}>End time</div>
-          <div className={getAllowedClasses(styles.priceField)}>Price</div>
+          <div className={getAllowedClasses(styles.priceField)}>{selectedPlace || 'Price'}</div>
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
           </div>
