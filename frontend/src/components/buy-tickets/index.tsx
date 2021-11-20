@@ -18,7 +18,27 @@ const BuyTickets: React.FC = () => {
   //   const dispatch = useAppDispatch();
   const [inputDateType, setType] = useState('text');
   const [airports, setAirports] = useState<IOption[]>([]);
-  const handleSelectChange = (selectedOption: IOption | null): void => {
+  const [from, setFrom] = useState<string>('');
+  // const [to, setTo] = useState<string>('');
+
+  const handleSelectChangeTo = (selectedOption: IOption | null): void => {
+    // if (selectedOption) {
+    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
+    // }
+    // eslint-disable-next-line no-console
+    console.log(selectedOption?.value);
+  };
+
+  const handleSelectChangeFrom = (selectedOption: IOption | null): void => {
+    // if (selectedOption) {
+    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
+    // }
+    // eslint-disable-next-line no-console
+    setFrom(selectedOption?.value || '');
+    console.log(selectedOption?.value);
+  };
+
+  const handleSelectChangeDate = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
     //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
     // }
@@ -64,12 +84,12 @@ const BuyTickets: React.FC = () => {
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <Select
             options={airports}
-            handleSelectChange={handleSelectChange}
+            handleSelectChange={handleSelectChangeFrom}
             placeholder="From"
           />
           <Select
-            options={airports}
-            handleSelectChange={handleSelectChange}
+            options={airports.filter((airport) => airport.value != from)}
+            handleSelectChange={handleSelectChangeTo}
             placeholder="To"
           />
           <input placeholder="Full Name" />
@@ -82,7 +102,7 @@ const BuyTickets: React.FC = () => {
           />
           <Select
             options={getTimeOptions()}
-            handleSelectChange={handleSelectChange}
+            handleSelectChange={handleSelectChangeDate}
             placeholder="Start time"
           />
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
