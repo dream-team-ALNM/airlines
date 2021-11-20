@@ -20,8 +20,6 @@ class Http {
 
       return this.parseJSON<T>(response);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(err);
       this.throwError(err as HttpError);
     }
   }
@@ -36,13 +34,14 @@ class Http {
     return headers;
   }
 
-  private checkStatus(response: Response): Response {
+  private async checkStatus(response: Response): Promise<Response> {
     if (!response.ok) {
+      const error = await response.json();
       throw new HttpError({
         status: response.status,
+        message: error.msg || error.error,
       });
     }
-
     return response;
   }
 

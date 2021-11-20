@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import React from 'react';
+import { toast } from 'react-toastify';
 import ConfirmButton from './button';
 import Link from '../../common/link';
 import { AppRoute } from 'common/enums';
@@ -23,18 +23,15 @@ const SignForm: React.FC<Props> = ({ formHeader }) => {
       : useFormFields<IUser>({ fullName: '', age: 0, email: '', password: '' });
 
   const handleSubmitForm = async (): Promise<void> => {
-    // eslint-disable-next-line no-console
-    console.log(inputs);
     try {
       const user =
         formHeader === 'Sign in'
           ? await new AuthApi().loginUser(inputs as ILoginUser)
           : await new AuthApi().registerUser(inputs as IUser);
-      console.log(user);
       localStorage.setItem('user', user.id || '');
       push(AppRoute.ROOT);
     } catch (e) {
-      alert((e as HttpError).message);
+      toast.error((e as HttpError).message);
     }
   };
 

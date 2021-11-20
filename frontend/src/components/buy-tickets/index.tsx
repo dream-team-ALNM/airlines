@@ -3,14 +3,13 @@
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
-import SelectFromTo from './select-from-to';
-import SelectPlane from './select-plane';
+import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'hooks';
 import { Airports } from '../../services';
-import * as helpers from 'helpers';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers';
 
 const BuyTickets: React.FC = () => {
   //   const { username, repos, currentRepo } = useAppSelector(
@@ -43,13 +42,8 @@ const BuyTickets: React.FC = () => {
     getOptions().then((result) => result && setAirports(result));
   }, []);
 
-  const getOptionsPlane = (): IOption[] | undefined => {
-    return [
-      { value: 'plane34RR', label: 'Plane-34RR' },
-      { value: 'plane55NN', label: 'Plane-55NN' },
-      { value: 'plane90ER', label: 'Plane-90ER' },
-      { value: 'plane23XX', label: 'Plane-23XX' },
-    ];
+  const getTimeOptions = (): IOption[] | undefined => {
+    return [{ value: '22-00', label: '22-00' }];
     // if (!repos) {
     //   return;
     // }
@@ -63,24 +57,17 @@ const BuyTickets: React.FC = () => {
     <>
       <Menu />
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
-      <div className={helpers.getAllowedClasses(styles.buyTicketsContainer)}>
-        <div
-          className={helpers.getAllowedClasses(styles.buyTicketsPlaneSchema)}
-        >
+      <div className={getAllowedClasses(styles.buyTicketsContainer)}>
+        <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
           <PlaneSeatsGrid seatsCount={78} />
         </div>
-        <div className={helpers.getAllowedClasses(styles.buyTicketsForms)}>
-          <SelectPlane
-            options={getOptionsPlane()}
-            handleSelectChange={handleSelectChange}
-            placeholder="Plane type"
-          />
-          <SelectFromTo
+        <div className={getAllowedClasses(styles.buyTicketsForms)}>
+          <Select
             options={airports}
             handleSelectChange={handleSelectChange}
             placeholder="From"
           />
-          <SelectFromTo
+          <Select
             options={airports}
             handleSelectChange={handleSelectChange}
             placeholder="To"
@@ -90,21 +77,23 @@ const BuyTickets: React.FC = () => {
             type={inputDateType}
             onFocus={(): void => setType('date')}
             onBlur={(): void => setType('text')}
-            placeholder="Start Date&amp;Time"
+            placeholder="Start Date"
             lang="en-US"
           />
-          <div className={helpers.getAllowedClasses(styles.endDateField)}>
-            End Date&amp;Time
-          </div>
-          <div className={helpers.getAllowedClasses(styles.priceField)}>
-            Price
-          </div>
-          <div className={helpers.getAllowedClasses(styles.buttonContainer)}>
+          <Select
+            options={getTimeOptions()}
+            handleSelectChange={handleSelectChange}
+            placeholder="Start time"
+          />
+          <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
+          <div className={getAllowedClasses(styles.endDateField)}>End time</div>
+          <div className={getAllowedClasses(styles.priceField)}>Price</div>
+          <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
           </div>
         </div>
       </div>
-      <p className={helpers.getAllowedClasses('px-4')}>
+      <p className={getAllowedClasses('px-4')}>
         За допомогою нашого сайту ви легко зможете купити квитки Ukraine
         Airways. Наші літаки літають за всіма найпопулярнішими напрямками,
         такими як, Дніпро Київ, Львів Київ, Харків Київ. Тож, бажаючі придбати
