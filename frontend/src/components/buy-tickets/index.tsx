@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
@@ -5,8 +7,9 @@ import SelectFromTo from './select-from-to';
 import SelectPlane from './select-plane';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'hooks';
-import { getAllowedClasses } from 'helpers';
+import { useEffect, useState } from 'hooks';
+import { Airports } from '../../services';
+import * as helpers from 'helpers';
 import styles from './styles.module.scss';
 
 const BuyTickets: React.FC = () => {
@@ -15,6 +18,7 @@ const BuyTickets: React.FC = () => {
   //   );
   //   const dispatch = useAppDispatch();
   const [inputDateType, setType] = useState('text');
+  const [airports, setAirports] = useState<IOption[]>([]);
   const handleSelectChange = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
     //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
@@ -23,28 +27,22 @@ const BuyTickets: React.FC = () => {
     console.log(selectedOption?.value);
   };
 
-  const getOptions = (): IOption[] | undefined => {
-    return [
-      { value: 'dnipro', label: 'Дніпро' },
-      { value: 'donetsk', label: 'Донецьк' },
-      { value: 'ivanoFrankivsk', label: 'Івано-Франківськ' },
-      { value: 'kyivBorispil', label: 'Київ-Бориспіль' },
-      { value: 'kyivZhylani', label: 'Київ-Жуляни' },
-      { value: 'lviv', label: 'Львів' },
-      { value: 'odesa', label: 'Одеса' },
-      { value: 'poltava', label: 'Полтава' },
-      { value: 'chernovtsi', label: 'Черновці' },
-      { value: 'charkiv', label: 'Харків' },
-      { value: 'cherson', label: 'Херсон' },
-    ];
-    // if (!repos) {
-    //   return;
-    // }
-    // return repos.map((repo) => ({
-    //   value: repo,
-    //   label: repo,
-    // }));
+  const getOptions = async (): Promise<IOption[] | undefined> => {
+    const airports = new Airports();
+    const allAirports = await airports.getAirports();
+    const result: Array<any> = [];
+    allAirports.forEach(async (airport) => {
+      result.push({
+        value: airport._id,
+        label: airport.name,
+      });
+    });
+    return result;
   };
+  useEffect(() => {
+    getOptions().then((result) => result && setAirports(result));
+  }, []);
+
   const getOptionsPlane = (): IOption[] | undefined => {
     return [
       { value: 'plane34RR', label: 'Plane-34RR' },
@@ -65,23 +63,25 @@ const BuyTickets: React.FC = () => {
     <>
       <Menu />
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
-      <div className={getAllowedClasses(styles.buyTicketsContainer)}>
-        <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
+      <div className={helpers.getAllowedClasses(styles.buyTicketsContainer)}>
+        <div
+          className={helpers.getAllowedClasses(styles.buyTicketsPlaneSchema)}
+        >
           <PlaneSeatsGrid seatsCount={78} />
         </div>
-        <div className={getAllowedClasses(styles.buyTicketsForms)}>
+        <div className={helpers.getAllowedClasses(styles.buyTicketsForms)}>
           <SelectPlane
             options={getOptionsPlane()}
             handleSelectChange={handleSelectChange}
             placeholder="Plane type"
           />
           <SelectFromTo
-            options={getOptions()}
+            options={airports}
             handleSelectChange={handleSelectChange}
             placeholder="From"
           />
           <SelectFromTo
-            options={getOptions()}
+            options={airports}
             handleSelectChange={handleSelectChange}
             placeholder="To"
           />
@@ -93,16 +93,18 @@ const BuyTickets: React.FC = () => {
             placeholder="Start Date&amp;Time"
             lang="en-US"
           />
-          <div className={getAllowedClasses(styles.endDateField)}>
+          <div className={helpers.getAllowedClasses(styles.endDateField)}>
             End Date&amp;Time
           </div>
-          <div className={getAllowedClasses(styles.priceField)}>Price</div>
-          <div className={getAllowedClasses(styles.buttonContainer)}>
+          <div className={helpers.getAllowedClasses(styles.priceField)}>
+            Price
+          </div>
+          <div className={helpers.getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
           </div>
         </div>
       </div>
-      <p className={getAllowedClasses('px-4')}>
+      <p className={helpers.getAllowedClasses('px-4')}>
         За допомогою нашого сайту ви легко зможете купити квитки Ukraine
         Airways. Наші літаки літають за всіма найпопулярнішими напрямками,
         такими як, Дніпро Київ, Львів Київ, Харків Київ. Тож, бажаючі придбати
