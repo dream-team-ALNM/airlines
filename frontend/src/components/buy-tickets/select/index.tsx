@@ -1,7 +1,7 @@
 import useWindowDimensions from 'hooks/window-dimensions.hook';
 import Select from 'react-select';
 import { IOption } from '../../../common/interfaces/components/option.interface';
-import getSelectFromToStyles from '../select-from-to/select-from-to-styles';
+import getSelectStyles from '../select/select-styles';
 
 type Props = {
   handleSelectChange(selectedOption: IOption | null): void;
@@ -23,7 +23,7 @@ const SelectFromTo: React.FC<Props> = ({
       onChange={handleSelectChange}
       options={options}
       placeholder={placeholder}
-      styles={getSelectFromToStyles(selectWidth, selectHeight, selectFontSize)}
+      styles={getSelectStyles(selectWidth, selectHeight, selectFontSize)}
       isClearable
       isSearchable
       autoFocus

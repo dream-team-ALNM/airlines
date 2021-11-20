@@ -1,8 +1,7 @@
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
-import SelectFromTo from './select-from-to';
-import SelectPlane from './select-plane';
+import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'hooks';
@@ -45,13 +44,9 @@ const BuyTickets: React.FC = () => {
     //   label: repo,
     // }));
   };
-  const getOptionsPlane = (): IOption[] | undefined => {
-    return [
-      { value: 'plane34RR', label: 'Plane-34RR' },
-      { value: 'plane55NN', label: 'Plane-55NN' },
-      { value: 'plane90ER', label: 'Plane-90ER' },
-      { value: 'plane23XX', label: 'Plane-23XX' },
-    ];
+
+  const getTimeOptions = (): IOption[] | undefined => {
+    return [{ value: '22-00', label: '22-00' }];
     // if (!repos) {
     //   return;
     // }
@@ -70,17 +65,12 @@ const BuyTickets: React.FC = () => {
           <PlaneSeatsGrid seatsCount={78} />
         </div>
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
-          <SelectPlane
-            options={getOptionsPlane()}
-            handleSelectChange={handleSelectChange}
-            placeholder="Plane type"
-          />
-          <SelectFromTo
+          <Select
             options={getOptions()}
             handleSelectChange={handleSelectChange}
             placeholder="From"
           />
-          <SelectFromTo
+          <Select
             options={getOptions()}
             handleSelectChange={handleSelectChange}
             placeholder="To"
@@ -88,14 +78,18 @@ const BuyTickets: React.FC = () => {
           <input placeholder="Full Name" />
           <input
             type={inputDateType}
-            onFocus={(): void => setType('datetime-local')}
+            onFocus={(): void => setType('date')}
             onBlur={(): void => setType('text')}
-            placeholder="Start Date&amp;Time"
+            placeholder="Start Date"
             lang="en-US"
           />
-          <div className={getAllowedClasses(styles.endDateField)}>
-            End Date&amp;Time
-          </div>
+          <Select
+            options={getTimeOptions()}
+            handleSelectChange={handleSelectChange}
+            placeholder="Start time"
+          />
+          <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
+          <div className={getAllowedClasses(styles.endDateField)}>End time</div>
           <div className={getAllowedClasses(styles.priceField)}>Price</div>
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
