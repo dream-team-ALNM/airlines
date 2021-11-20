@@ -82,6 +82,7 @@ const BuyTickets: React.FC = () => {
             onBlur={(): void => setType('text')}
             placeholder="Start Date"
             lang="en-US"
+            min={new Date().toISOString().slice(0, 10)}
           />
           <Select
             options={getTimeOptions()}

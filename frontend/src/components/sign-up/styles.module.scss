@@ -1,7 +1,7 @@
 .signFormContainer {
   width: 30%;
   min-height: 40%;
-  margin: 10% auto;
+  margin: 5% auto;
   border: 1.5px solid black;
   display: flex;
   flex-direction: column;
@@ -9,6 +9,16 @@
   background-color: #c4c4c4;
   border-radius: 25px;
   cursor: pointer;
+
+  .error {
+    font-size: 80%;
+    color: red;
+    text-align: start;
+    padding-top: 0;
+    margin-top: 0;
+    width: 80%;
+  }
+
   .formName {
     font-family: Arial, Helvetica, sans-serif;
     font-style: italic;
@@ -20,7 +30,6 @@
   input {
     background-color: #e8ebed;
     border: none;
-    margin-bottom: 1.2rem;
     padding: 0.3rem 0.6rem;
     width: 80%;
   }
