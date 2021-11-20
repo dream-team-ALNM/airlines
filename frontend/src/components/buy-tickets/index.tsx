@@ -88,7 +88,7 @@ const BuyTickets: React.FC = () => {
           <input placeholder="Full Name" />
           <input
             type={inputDateType}
-            onFocus={(): void => setType('date')}
+            onFocus={(): void => setType('datetime-local')}
             onBlur={(): void => setType('text')}
             placeholder="Start Date&amp;Time"
             lang="en-US"
