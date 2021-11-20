@@ -2,12 +2,13 @@ import { Schema } from 'mongoose';
 
 const { ObjectId } = Schema.Types;
 
-const scheduleSchema = new Schema({
+export const scheduleSchema = new Schema({
   _id: ObjectId,
   planeID: ObjectId,
   startDate: String,
+  startTime: String,
   endDate: String,
+  endTime: String,
   from: ObjectId,
   to: ObjectId,
 });
-export default scheduleSchema;

@@ -1,12 +1,16 @@
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
+import airwaysImage from '../../assets/img/airways.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'hooks';
-import { getAllowedClasses } from 'helpers';
+import { useEffect, useState } from 'hooks';
+import { Airports } from '../../services';
 import styles from './styles.module.scss';
+import { getAllowedClasses } from 'helpers';
 
 const BuyTickets: React.FC = () => {
   //   const { username, repos, currentRepo } = useAppSelector(
@@ -14,39 +18,58 @@ const BuyTickets: React.FC = () => {
   //   );
   //   const dispatch = useAppDispatch();
   const [inputDateType, setType] = useState('text');
-  const handleSelectChange = (selectedOption: IOption | null): void => {
+  const [airports, setAirports] = useState<IOption[]>([]);
+  const [from, setFrom] = useState<string>('');
+  const [to, setTo] = useState<string>('');
+  const [startTime, setStartTime] = useState<string>('');
+  const [selectedPlace, setSelectedPlace] = useState<string>('');
+
+  const handleSelectChangeTo = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
     //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
     // }
     // eslint-disable-next-line no-console
+    setTo(selectedOption?.value || '');
     console.log(selectedOption?.value);
   };
 
-  const getOptions = (): IOption[] | undefined => {
-    return [
-      { value: 'dnipro', label: 'Дніпро' },
-      { value: 'donetsk', label: 'Донецьк' },
-      { value: 'ivanoFrankivsk', label: 'Івано-Франківськ' },
-      { value: 'kyivBorispil', label: 'Київ-Бориспіль' },
-      { value: 'kyivZhylani', label: 'Київ-Жуляни' },
-      { value: 'lviv', label: 'Львів' },
-      { value: 'odesa', label: 'Одеса' },
-      { value: 'poltava', label: 'Полтава' },
-      { value: 'chernovtsi', label: 'Черновці' },
-      { value: 'charkiv', label: 'Харків' },
-      { value: 'cherson', label: 'Херсон' },
-    ];
-    // if (!repos) {
-    //   return;
+  const handleSelectChangeFrom = (selectedOption: IOption | null): void => {
+    // if (selectedOption) {
+    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
     // }
-    // return repos.map((repo) => ({
-    //   value: repo,
-    //   label: repo,
-    // }));
+    // eslint-disable-next-line no-console
+    setFrom(selectedOption?.value || '');
+    console.log(selectedOption?.value);
   };
 
+  const handleSelectChangeDate = (selectedOption: IOption | null): void => {
+    // if (selectedOption) {
+    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
+    // }
+    setStartTime(selectedOption?.value || '');
+    // eslint-disable-next-line no-console
+    console.log(selectedOption?.value);
+  };
+
+  const getOptions = async (): Promise<IOption[] | undefined> => {
+    const airports = new Airports();
+    const allAirports = await airports.getAirports();
+    const result: Array<any> = [];
+    allAirports.forEach(async (airport) => {
+      result.push({
+        value: airport._id,
+        label: airport.name,
+      });
+    });
+    return result;
+  };
+
+  useEffect(() => {
+    getOptions().then((result) => result && setAirports(result));
+  }, []);
+
   const getTimeOptions = (): IOption[] | undefined => {
-    return [{ value: '22-00', label: '22-00' }];
+    return [{ value: '08:30', label: '08:30' }];
     // if (!repos) {
     //   return;
     // }
@@ -61,18 +84,25 @@ const BuyTickets: React.FC = () => {
       <Menu />
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
-        <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
-          <PlaneSeatsGrid seatsCount={78} />
-        </div>
+        {from && to && startTime ? (
+          <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
+            <PlaneSeatsGrid seatsCount={78} onSeatClick={setSelectedPlace} selected={selectedPlace}/>
+          </div>
+        ) : (
+          <img
+            src={airwaysImage}
+            className={getAllowedClasses(styles.menuImage)}
+          />
+        )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <Select
-            options={getOptions()}
-            handleSelectChange={handleSelectChange}
+            options={airports}
+            handleSelectChange={handleSelectChangeFrom}
             placeholder="From"
           />
           <Select
-            options={getOptions()}
-            handleSelectChange={handleSelectChange}
+            options={airports.filter((airport) => airport.value != from)}
+            handleSelectChange={handleSelectChangeTo}
             placeholder="To"
           />
           <input placeholder="Full Name" />
@@ -86,12 +116,12 @@ const BuyTickets: React.FC = () => {
           />
           <Select
             options={getTimeOptions()}
-            handleSelectChange={handleSelectChange}
+            handleSelectChange={handleSelectChangeDate}
             placeholder="Start time"
           />
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
           <div className={getAllowedClasses(styles.endDateField)}>End time</div>
-          <div className={getAllowedClasses(styles.priceField)}>Price</div>
+          <div className={getAllowedClasses(styles.priceField)}>{selectedPlace || 'Price'}</div>
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
           </div>

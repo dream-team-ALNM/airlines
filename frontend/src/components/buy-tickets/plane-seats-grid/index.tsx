@@ -8,12 +8,16 @@ import { seatStates } from 'common/enums/seats';
 
 type Props = {
   seatsCount: number;
+  selected: string;
+  onSeatClick: (seatLabel: string) => void;
 };
 
-const businessSeats = ['A01', 'A02','B01', 'B02','C02', 'D02'];
+const businessSeats = ['A01', 'A02', 'B01', 'B02', 'C02', 'D02'];
 
 const PlaneSeatsGrid: React.FC<Props> = ({
   seatsCount,
+  onSeatClick,
+  selected,
 }) => {
   const rowsCount = (seatsCount + 2) / 4;
   const rows: Array<string> = [...Array(rowsCount).keys()].map((rowNum) =>
@@ -55,15 +59,21 @@ const PlaneSeatsGrid: React.FC<Props> = ({
         }}
       >
         {topSeats.map((seatNum) => {
-          const seatState = businessSeats.includes(seatNum)? seatStates.business : seatStates.vacant;
-          return(
+          const seatState =
+            seatNum === selected
+              ? seatStates.selected
+              : businessSeats.includes(seatNum)
+                ? seatStates.business
+                : seatStates.vacant;
+          return (
             <PlaneSeatButton
               key={seatNum}
               seatLabel={seatNum}
               seatState={seatState}
+              onSeatClick={onSeatClick}
             />
-          );},
-        )}
+          );
+        })}
       </section>
 
       <section
@@ -88,15 +98,21 @@ const PlaneSeatsGrid: React.FC<Props> = ({
         }}
       >
         {bottomSeats.map((seatNum) => {
-          const seatState = businessSeats.includes(seatNum)? seatStates.business : seatStates.vacant;
-          return(
+          const seatState =
+            seatNum === selected
+              ? seatStates.selected
+              : businessSeats.includes(seatNum)
+                ? seatStates.business
+                : seatStates.vacant;
+          return (
             <PlaneSeatButton
               key={seatNum}
               seatLabel={seatNum}
               seatState={seatState}
+              onSeatClick={onSeatClick}
             />
-          );},
-        )}
+          );
+        })}
       </section>
     </div>
   );
