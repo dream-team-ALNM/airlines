@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
+import airwaysImage from '../../assets/img/airways.png';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
@@ -19,13 +20,15 @@ const BuyTickets: React.FC = () => {
   const [inputDateType, setType] = useState('text');
   const [airports, setAirports] = useState<IOption[]>([]);
   const [from, setFrom] = useState<string>('');
-  // const [to, setTo] = useState<string>('');
+  const [to, setTo] = useState<string>('');
+  const [startTime, setStartTime] = useState<string>('');
 
   const handleSelectChangeTo = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
     //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
     // }
     // eslint-disable-next-line no-console
+    setTo(selectedOption?.value || '');
     console.log(selectedOption?.value);
   };
 
@@ -42,6 +45,7 @@ const BuyTickets: React.FC = () => {
     // if (selectedOption) {
     //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
     // }
+    setStartTime(selectedOption?.value || '');
     // eslint-disable-next-line no-console
     console.log(selectedOption?.value);
   };
@@ -78,9 +82,16 @@ const BuyTickets: React.FC = () => {
       <Menu />
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
-        <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
-          <PlaneSeatsGrid seatsCount={78} />
-        </div>
+        {from && to && startTime ? (
+          <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
+            <PlaneSeatsGrid seatsCount={78} />
+          </div>
+        ) : (
+          <img
+            src={airwaysImage}
+            className={getAllowedClasses(styles.menuImage)}
+          />
+        )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <Select
             options={airports}
