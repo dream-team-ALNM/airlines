@@ -22,7 +22,11 @@ const BuyTickets: React.FC = () => {
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [startTime, setStartTime] = useState<string>('');
-  const [selectedPlace, setSelectedPlace] = useState<string>('');
+  const [selectedPlace, setSelectedPlace] = useState<string[]>([]);
+
+  const onSeatClick = (seatLabel: string): void => {
+    setSelectedPlace([...selectedPlace, seatLabel]);
+  };
 
   const handleSelectChangeTo = (selectedOption: IOption | null): void => {
     // if (selectedOption) {
@@ -86,7 +90,11 @@ const BuyTickets: React.FC = () => {
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         {from && to && startTime ? (
           <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
-            <PlaneSeatsGrid seatsCount={78} onSeatClick={setSelectedPlace} selected={selectedPlace}/>
+            <PlaneSeatsGrid
+              seatsCount={78}
+              onSeatClick={onSeatClick}
+              selected={selectedPlace}
+            />
           </div>
         ) : (
           <img
@@ -105,7 +113,6 @@ const BuyTickets: React.FC = () => {
             handleSelectChange={handleSelectChangeTo}
             placeholder="To"
           />
-          <input placeholder="Full Name" />
           <input
             type={inputDateType}
             onFocus={(): void => setType('date')}
@@ -121,7 +128,10 @@ const BuyTickets: React.FC = () => {
           />
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
           <div className={getAllowedClasses(styles.endDateField)}>End time</div>
-          <div className={getAllowedClasses(styles.priceField)}>{selectedPlace || 'Price'}</div>
+          <div className={getAllowedClasses(styles.priceField)}>
+            {selectedPlace.length || 'Price'}
+          </div>
+          <input placeholder="Full Name" />
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success">buy</Button>
           </div>

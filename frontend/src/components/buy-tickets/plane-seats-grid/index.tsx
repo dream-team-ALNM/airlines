@@ -8,7 +8,7 @@ import { seatStates } from 'common/enums/seats';
 
 type Props = {
   seatsCount: number;
-  selected: string;
+  selected: string[];
   onSeatClick: (seatLabel: string) => void;
 };
 
@@ -59,12 +59,11 @@ const PlaneSeatsGrid: React.FC<Props> = ({
         }}
       >
         {topSeats.map((seatNum) => {
-          const seatState =
-            seatNum === selected
-              ? seatStates.selected
-              : businessSeats.includes(seatNum)
-                ? seatStates.business
-                : seatStates.vacant;
+          const seatState = selected.includes(seatNum)
+            ? seatStates.selected
+            : businessSeats.includes(seatNum)
+              ? seatStates.business
+              : seatStates.vacant;
           return (
             <PlaneSeatButton
               key={seatNum}
@@ -98,12 +97,11 @@ const PlaneSeatsGrid: React.FC<Props> = ({
         }}
       >
         {bottomSeats.map((seatNum) => {
-          const seatState =
-            seatNum === selected
-              ? seatStates.selected
-              : businessSeats.includes(seatNum)
-                ? seatStates.business
-                : seatStates.vacant;
+          const seatState = selected.includes(seatNum)
+            ? seatStates.selected
+            : businessSeats.includes(seatNum)
+              ? seatStates.business
+              : seatStates.vacant;
           return (
             <PlaneSeatButton
               key={seatNum}
