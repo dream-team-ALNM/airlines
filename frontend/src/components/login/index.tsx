@@ -14,11 +14,7 @@ import { validEmail } from 'common/constants';
 
 import styles from './styles.module.scss';
 
-type Props = {
-  formHeader: string;
-};
-
-const Login: React.FC<Props> = ({ formHeader }) => {
+const Login: React.FC = () => {
   const { push } = useHistory();
   const [inputs, setInputs] = useFormFields<ILoginUser>({
     email: '',
@@ -49,29 +45,38 @@ const Login: React.FC<Props> = ({ formHeader }) => {
 
   return (
     <div className={getAllowedClasses(styles.signFormContainer)}>
-      <p className={getAllowedClasses(styles.formName)}>{formHeader}</p>
-      <>
-        <input
-          placeholder="Email"
-          name="email"
-          type="string"
-          value={inputs.email}
-          onChange={setInputs}
-        ></input>
-        <p className={getAllowedClasses(styles.error)}>{errors.emailError}</p>
-        <input
-          placeholder="Password"
-          name="password"
-          type="password"
-          value={inputs.password}
-          onChange={setInputs}
-        ></input>
-
-        <ConfirmButton name="Confirm" onClick={handleSubmitForm} />
-        <div className={getAllowedClasses(styles.linkFormContainer)}>
-          <Link to={AppRoute.SIGN_UP}>Sign up</Link>
+      <div className={getAllowedClasses(styles.signForm)}>
+        <p className={getAllowedClasses(styles.formName)}>Log in</p>
+        <div className={getAllowedClasses(styles.signFields)}>
+          <div className={getAllowedClasses(styles.signField)}>
+            <input
+              placeholder="Email"
+              name="email"
+              type="string"
+              value={inputs.email}
+              onChange={setInputs}
+            ></input>
+            <p className={getAllowedClasses(styles.error)}>
+              {errors.emailError}
+            </p>
+          </div>
+          <div className={getAllowedClasses(styles.signField)}>
+            <input
+              placeholder="Password"
+              name="password"
+              type="password"
+              value={inputs.password}
+              onChange={setInputs}
+            ></input>
+          </div>
         </div>
-      </>
+        <div className={getAllowedClasses(styles.signFields)}>
+          <ConfirmButton name="Confirm" onClick={handleSubmitForm} />
+          <div className={getAllowedClasses(styles.linkFormContainer)}>
+            <Link to={AppRoute.SIGN_UP}>Sign up</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

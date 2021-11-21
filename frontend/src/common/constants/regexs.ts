@@ -6,4 +6,6 @@ export const validPassword =
 
 export const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/gm;
 
-export const validAge = /^([1][8-9]|[2-9][0-9]|100)$/gm;
+// export const validAge = /^([1][8-9]|[2-9][0-9]|100)$/gm;
+
+export const validAge = /^18|19|20$/gm;
