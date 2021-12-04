@@ -3,14 +3,15 @@
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import planeGif from '../../assets/img/planegif.gif';
-import { IOption } from '../../common/interfaces/components/option.interface';
+import { IOption, IPrices } from '../../common/interfaces';
 import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'hooks';
-import { AirportsApi, TicketApi, ScheduleApi } from '../../services';
-import styles from './styles.module.scss';
+import { AirportsApi, TicketApi, ScheduleApi, PlanesApi } from '../../services';
+
 import { getAllowedClasses } from 'helpers';
+import styles from './styles.module.scss';
 
 const businessPlaces = ['A01', 'A02', 'B01', 'B02', 'C02', 'D02'];
 
@@ -22,17 +23,18 @@ const BuyTickets: React.FC = () => {
   const [to, setTo] = useState<string>('');
   const [startTimes, setStartTimes] = useState<IOption[]>([]);
   const [scheduleId, setScheduleId] = useState<string>('');
-  const [selectedPlace, setSelectedPlace] = useState<string[]>([]);
+  const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>('');
+  const [price, setPrice] = useState<number>(0);
 
   const onSeatClick = (seatLabel: string): void => {
-    if (selectedPlace.includes(seatLabel)) {
-      setSelectedPlace(
-        [...selectedPlace].filter((seat: string) => seat !== seatLabel),
+    if (selectedPlaces.includes(seatLabel)) {
+      setSelectedPlaces(
+        [...selectedPlaces].filter((seat: string) => seat !== seatLabel),
       );
     } else {
       if (!occupiedPlaces.includes(seatLabel)) {
-        setSelectedPlace([...selectedPlace, seatLabel]);
+        setSelectedPlaces([...selectedPlaces, seatLabel]);
       }
     }
   };
@@ -103,6 +105,30 @@ const BuyTickets: React.FC = () => {
     setStartDate(value);
   };
 
+  const getPrices = async (): Promise<IPrices> => {
+    const planes = new PlanesApi();
+    const prices = await planes.getPrices(scheduleId);
+    return prices;
+  };
+
+  useEffect(() => {
+    const countOfSelectedBusinessPlaces = selectedPlaces.filter((place) =>
+      businessPlaces.includes(place),
+    ).length;
+    const countOfSelectedNotBusinessPlaces =
+      selectedPlaces.length - countOfSelectedBusinessPlaces;
+
+    getPrices().then(
+      ({ price, businessPrice }) =>
+        price &&
+        businessPrice &&
+        setPrice(
+          countOfSelectedBusinessPlaces * businessPrice +
+            countOfSelectedNotBusinessPlaces * price,
+        ),
+    );
+  }, [selectedPlaces]);
+
   return (
     <>
       <Menu />
@@ -119,14 +145,14 @@ const BuyTickets: React.FC = () => {
               occupiedPlaces={occupiedPlaces}
               seatsCount={78}
               onSeatClick={onSeatClick}
-              selected={selectedPlace}
+              selected={selectedPlaces}
               businessPlaces={businessPlaces}
             />
           </div>
         ) : (
           <img
             src={planeGif}
-            className={getAllowedClasses(styles.menuImage, 'shadow')}
+            className={getAllowedClasses(styles.planeImage, 'shadow')}
           />
         )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
@@ -157,7 +183,7 @@ const BuyTickets: React.FC = () => {
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
           <div className={getAllowedClasses(styles.endDateField)}>End time</div>
           <div className={getAllowedClasses(styles.priceField)}>
-            {selectedPlace.length || 'Price'}
+            {price || 'Price'}
           </div>
           <input placeholder="Full Name" />
           <div className={getAllowedClasses(styles.buttonContainer)}>
