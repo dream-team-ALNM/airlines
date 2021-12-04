@@ -7,10 +7,13 @@ export function useFormFields<T>(initialState: T): any {
   return [
     inputs,
     function (event: React.ChangeEvent<HTMLInputElement>): any {
-      const { name, value } = event.target;
+      const { name, value, validationMessage } = event.target;
+      // eslint-disable-next-line no-console
+      console.log(validationMessage);
       setValues({
         ...inputs,
         [name]: value,
+        [`${name}Error`]: validationMessage,
       });
     },
   ];

@@ -4,7 +4,7 @@ import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
 import PlaneSeatButton from '../plane-seat-button';
-import { seatStates } from 'common/enums/seats';
+import { seatStates } from 'common/enums';
 
 type Props = {
   seatsCount: number;

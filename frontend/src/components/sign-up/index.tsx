@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/quotes */
-/* eslint-disable @typescript-eslint/indent */
 import React from 'react';
 import { toast } from 'react-toastify';
 import ConfirmButton from './button';
 import Link from '../common/link';
-import { AppRoute } from 'common/enums';
+import { AppRoute, ErrorMessage } from 'common/enums';
 import { ISignupError, IUser } from '../../common/interfaces';
-import { useFormFields, useHistory, useEffect, useState } from '../../hooks';
+import { useFormFields, useHistory, useState } from '../../hooks';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
@@ -17,24 +15,20 @@ import {
   validEmail,
   validPassword,
   validFullName,
-  validAge,
 } from 'common/constants';
 
 const Signup: React.FC = () => {
   const [inputAgeType, setType] = useState('text');
   const { push } = useHistory();
-  const [inputs, setInputs] = useFormFields<IUser>({
+  const [inputs, setInputs] = useFormFields<IUser & ISignupError>({
     fullName: '',
     age: 0,
     email: '',
     password: '',
-  });
-
-  const [errors, setErrors] = useState<ISignupError>({
     fullNameError: '',
     ageError: '',
-    emailError: '',
     passwordError: '',
+    emailError: '',
   });
 
   const handleSubmitForm = async (): Promise<void> => {
@@ -46,33 +40,6 @@ const Signup: React.FC = () => {
       toast.error((e as HttpError).message);
     }
   };
-
-  useEffect(() => {
-    console.log(inputs.age);
-    console.log(validAge.test(inputs.age));
-    // console.log(validPassword.test(inputs.password));
-    // console.log(validFullName.test(inputs.fullname));
-    // console.log(validEmail.test(inputs.email));
-
-    setErrors({
-      emailError:
-        inputs.email && !validEmail.test(inputs.email)
-          ? 'Імейл: містить знак @ та поштовий сервер'
-          : '',
-      passwordError:
-        inputs.password && !validPassword.test(inputs.password)
-          ? 'Пароль: 6-12 символів, латинські великі/малі літери, числа та символи'
-          : '',
-      fullNameError:
-        inputs.fullname && !validFullName.test(inputs.fullname)
-          ? "Повне ім'я: 2 слова латиницею/кирилицею, 1-15 символів на слово, перша літера слова - велика"
-          : '',
-      ageError:
-        inputs.age && !validAge.test(inputs.age)
-          ? 'Вік: ціле число від 18 до 100'
-          : '',
-    });
-  }, [inputs]);
 
   return (
     <div className={getAllowedClasses(styles.signFormContainer)}>
@@ -86,9 +53,10 @@ const Signup: React.FC = () => {
               type="string"
               value={inputs.fullName}
               onChange={setInputs}
+              pattern={validFullName.toString().slice(1, -3)}
             ></input>
             <p className={getAllowedClasses(styles.error)}>
-              {errors.fullNameError}
+              {inputs.fullNameError ? ErrorMessage.FULLNAME : ''}
             </p>
           </div>
           <div className={getAllowedClasses(styles.signField)}>
@@ -99,10 +67,12 @@ const Signup: React.FC = () => {
               onFocus={(): void => setType('number')}
               onBlur={(): void => setType('text')}
               onChange={setInputs}
-              min="1"
+              min="18"
               max="100"
             ></input>
-            <p className={getAllowedClasses(styles.error)}>{errors.ageError}</p>
+            <p className={getAllowedClasses(styles.error)}>
+              {inputs.ageError ? ErrorMessage.AGE : ''}
+            </p>
           </div>
           <div className={getAllowedClasses(styles.signField)}>
             <input
@@ -111,9 +81,10 @@ const Signup: React.FC = () => {
               type="string"
               value={inputs.email}
               onChange={setInputs}
+              pattern={validEmail.toString().slice(1, -3)}
             ></input>
             <p className={getAllowedClasses(styles.error)}>
-              {errors.emailError}
+              {inputs.emailError ? ErrorMessage.EMAIL : ''}
             </p>
           </div>
           <div className={getAllowedClasses(styles.signField)}>
@@ -123,9 +94,10 @@ const Signup: React.FC = () => {
               type="password"
               value={inputs.password}
               onChange={setInputs}
+              pattern={validPassword.toString().slice(1, -3)}
             ></input>
             <p className={getAllowedClasses(styles.error)}>
-              {errors.passwordError}
+              {inputs.passwordError ? ErrorMessage.PASSWORD : ''}
             </p>
           </div>
           <div className={getAllowedClasses(styles.signFields)}>
