@@ -7,4 +7,5 @@ export interface IScheduleEntity extends mongoose.Document {
   endTime?: string;
   from?: ObjectId;
   to?: ObjectId;
+  planeId?: ObjectId;
 }

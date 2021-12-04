@@ -1,6 +1,6 @@
 import conn from '../db/airlines';
 import mongoose, { FilterQuery } from 'mongoose';
-import { ITicketEntity } from '../entities/ticket';
+import { ITicketEntity } from '../entities';
 
 class TicketRepository {
   private model;
@@ -13,7 +13,9 @@ class TicketRepository {
     return await this.model.findOne(parametrs);
   }
 
-  async getSome(parametrs: FilterQuery<ITicketEntity>): Promise<ITicketEntity[]> {
+  async getSome(
+    parametrs: FilterQuery<ITicketEntity>,
+  ): Promise<ITicketEntity[]> {
     return await this.model.find(parametrs);
   }
 
