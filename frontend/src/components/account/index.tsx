@@ -8,19 +8,28 @@ import Route from './route';
 import { useEffect, useState } from 'hooks';
 
 import styles from './styles.module.scss';
-import { AuthApi } from 'services';
-import { IUser } from 'common/interfaces';
+import { AuthApi, AccountApi } from 'services';
+import { IUser, IRoute } from 'common/interfaces';
 
 const Account: React.FC = () => {
   const [age, setAge] = useState<number>(18);
   const [fullName, setFullName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
+  const [routes, setRoutes] = useState<IRoute[]>([]);
 
   const getUser = async (): Promise<IUser> => {
     const auth = new AuthApi();
     const user = await auth.getInfoUser(localStorage.getItem('user') || '');
     console.log(user);
     return user;
+  };
+
+  const getAccountRoutes = async (): Promise<IRoute[]> => {
+    const account = new AccountApi();
+    const routes = await account.getRoutes({
+      id: localStorage.getItem('user') || '',
+    });
+    return routes;
   };
 
   useEffect(() => {
@@ -36,6 +45,16 @@ const Account: React.FC = () => {
       }
       console.log(result);
     });
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('user')) {
+      getAccountRoutes().then((result) => {
+        if (result) {
+          setRoutes(result);
+        }
+      });
+    }
   }, []);
 
   return (
@@ -62,18 +81,19 @@ const Account: React.FC = () => {
         <div className={getAllowedClasses(styles.containerList)}>
           <div className={getAllowedClasses(styles.routesList)}>
             <h3>Routes List</h3>
-            <Route
-              from="Бориспіль"
-              to="Жуляни"
-              startDate="11.09.21"
-              endDate="12.09.21"
-            />
-            <Route
-              from="Бориспіль"
-              to="Жуляни"
-              startDate="11.09.21"
-              endDate="12.09.21"
-            />
+            {routes.map(
+              ({ from, to, startDate, endDate, startTime, endTime, id }) => (
+                <Route
+                  key={id}
+                  from={from}
+                  to={to}
+                  startDate={startDate}
+                  endDate={endDate}
+                  startTime={startTime}
+                  endTime={endTime}
+                />
+              ),
+            )}
           </div>
         </div>
       </div>
