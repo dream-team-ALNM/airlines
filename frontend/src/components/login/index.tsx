@@ -58,6 +58,7 @@ const Login: React.FC = () => {
               value={inputs.password}
               onChange={setInputs}
             ></input>
+            <p className={getAllowedClasses(styles.error)}></p>
           </div>
         </div>
         <div className={getAllowedClasses(styles.signFields)}>
