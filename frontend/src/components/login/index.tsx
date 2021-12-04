@@ -4,9 +4,9 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import ConfirmButton from './button';
 import Link from '../common/link';
-import { AppRoute } from 'common/enums';
+import { AppRoute, ErrorMessage } from 'common/enums';
 import { ILoginUser, ILoginError } from '../../common/interfaces';
-import { useFormFields, useHistory, useEffect, useState } from '../../hooks';
+import { useFormFields, useHistory } from '../../hooks';
 import { getAllowedClasses } from 'helpers';
 import { AuthApi } from 'services';
 import { HttpError } from 'exceptions';
@@ -16,12 +16,11 @@ import styles from './styles.module.scss';
 
 const Login: React.FC = () => {
   const { push } = useHistory();
-  const [inputs, setInputs] = useFormFields<ILoginUser>({
+  const [inputs, setInputs] = useFormFields<ILoginUser & ILoginError>({
     email: '',
     password: '',
+    emailError: '',
   });
-
-  const [errors, setErrors] = useState<ILoginError>({ emailError: '' });
 
   const handleSubmitForm = async (): Promise<void> => {
     try {
@@ -32,16 +31,6 @@ const Login: React.FC = () => {
       toast.error((e as HttpError).message);
     }
   };
-
-  useEffect(() => {
-    setErrors((prevState: ILoginError) => ({
-      ...prevState,
-      emailError:
-        inputs.email && !validEmail.test(inputs.email)
-          ? 'Імейл: містить знак @ та поштовий сервер'
-          : '',
-    }));
-  }, [inputs]);
 
   return (
     <div className={getAllowedClasses(styles.signFormContainer)}>
@@ -55,9 +44,10 @@ const Login: React.FC = () => {
               type="string"
               value={inputs.email}
               onChange={setInputs}
+              pattern={validEmail.toString().slice(1, -3)}
             ></input>
             <p className={getAllowedClasses(styles.error)}>
-              {errors.emailError}
+              {inputs.emailError ? ErrorMessage.EMAIL : ''}
             </p>
           </div>
           <div className={getAllowedClasses(styles.signField)}>

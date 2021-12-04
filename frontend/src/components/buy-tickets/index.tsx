@@ -8,7 +8,7 @@ import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'hooks';
-import { Airports } from '../../services';
+import { AirportsApi, ScheduleApi } from '../../services';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers';
 
@@ -21,11 +21,19 @@ const BuyTickets: React.FC = () => {
   const [airports, setAirports] = useState<IOption[]>([]);
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
+  const [startTimes, setStartTimes] = useState<IOption[]>([]);
   const [startTime, setStartTime] = useState<string>('');
   const [selectedPlace, setSelectedPlace] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<string>('');
 
   const onSeatClick = (seatLabel: string): void => {
-    setSelectedPlace([...selectedPlace, seatLabel]);
+    if (selectedPlace.includes(seatLabel)) {
+      setSelectedPlace(
+        [...selectedPlace].filter((seat: string) => seat !== seatLabel),
+      );
+    } else {
+      setSelectedPlace([...selectedPlace, seatLabel]);
+    }
   };
 
   const handleSelectChangeTo = (selectedOption: IOption | null): void => {
@@ -46,17 +54,27 @@ const BuyTickets: React.FC = () => {
     console.log(selectedOption?.value);
   };
 
-  const handleSelectChangeDate = (selectedOption: IOption | null): void => {
-    // if (selectedOption) {
-    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
-    // }
+  const handleSelectChangeTime = (selectedOption: IOption | null): void => {
     setStartTime(selectedOption?.value || '');
     // eslint-disable-next-line no-console
     console.log(selectedOption?.value);
   };
 
+  const getOptionsTime = async (): Promise<IOption[] | undefined> => {
+    const schedule = new ScheduleApi();
+    const allTimes = await schedule.getTimes({ from, to, startDate });
+    const result: Array<any> = [];
+    allTimes.forEach(async (time) => {
+      result.push({
+        value: time.id,
+        label: time.value,
+      });
+    });
+    return result;
+  };
+
   const getOptions = async (): Promise<IOption[] | undefined> => {
-    const airports = new Airports();
+    const airports = new AirportsApi();
     const allAirports = await airports.getAirports();
     const result: Array<any> = [];
     allAirports.forEach(async (airport) => {
@@ -72,15 +90,17 @@ const BuyTickets: React.FC = () => {
     getOptions().then((result) => result && setAirports(result));
   }, []);
 
-  const getTimeOptions = (): IOption[] | undefined => {
-    return [{ value: '08:30', label: '08:30' }];
-    // if (!repos) {
-    //   return;
-    // }
-    // return repos.map((repo) => ({
-    //   value: repo,
-    //   label: repo,
-    // }));
+  useEffect(() => {
+    if (from && to && startDate) {
+      getOptionsTime().then((result) => result && setStartTimes(result));
+    }
+  }, [from, to, startDate]);
+
+  const handleDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const { value } = event.target;
+    setStartDate(value);
   };
 
   return (
@@ -117,13 +137,14 @@ const BuyTickets: React.FC = () => {
             type={inputDateType}
             onFocus={(): void => setType('date')}
             onBlur={(): void => setType('text')}
+            onChange={handleDateChange}
             placeholder="Start Date"
             lang="en-US"
             min={new Date().toISOString().slice(0, 10)}
           />
           <Select
-            options={getTimeOptions()}
-            handleSelectChange={handleSelectChangeDate}
+            options={startTimes}
+            handleSelectChange={handleSelectChangeTime}
             placeholder="Start time"
           />
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>

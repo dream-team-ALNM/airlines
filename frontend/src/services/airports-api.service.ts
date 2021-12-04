@@ -2,7 +2,7 @@ import { HttpMethod } from 'common/enums';
 import { IAirport } from 'common/interfaces/airports';
 import { Http } from './http.service';
 
-class Airports {
+class AirportsApi {
   public async getAirports(): Promise<IAirport[]> {
     return new Http().load('/api/airports', {
       method: HttpMethod.GET,
@@ -10,4 +10,4 @@ class Airports {
   }
 }
 
-export { Airports };
+export { AirportsApi };

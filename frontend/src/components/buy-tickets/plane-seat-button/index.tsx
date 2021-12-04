@@ -1,5 +1,5 @@
 import React from 'react';
-import { seatStates } from 'common/enums/seats';
+import { seatStates } from 'common/enums';
 import { getAllowedClasses } from 'helpers';
 
 import styles from './styles.module.scss';
