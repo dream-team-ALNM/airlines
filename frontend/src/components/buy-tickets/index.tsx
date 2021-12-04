@@ -8,17 +8,14 @@ import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'hooks';
-import { Airports } from '../../services';
+import { AirportsApi, TicketApi } from '../../services';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers';
 
 const BuyTickets: React.FC = () => {
-  //   const { username, repos, currentRepo } = useAppSelector(
-  //     (state) => state.github,
-  //   );
-  //   const dispatch = useAppDispatch();
   const [inputDateType, setType] = useState('text');
   const [airports, setAirports] = useState<IOption[]>([]);
+  const [occupiedPlaces, setOccupiedPlaces] = useState<string[]>([]);
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [startTime, setStartTime] = useState<string>('');
@@ -30,44 +27,31 @@ const BuyTickets: React.FC = () => {
         [...selectedPlace].filter((seat: string) => seat !== seatLabel),
       );
     } else {
-      setSelectedPlace([...selectedPlace, seatLabel]);
+      if (!occupiedPlaces.includes(seatLabel)) {
+        setSelectedPlace([...selectedPlace, seatLabel]);
+      }
     }
   };
 
   const handleSelectChangeTo = (selectedOption: IOption | null): void => {
-    // if (selectedOption) {
-    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
-    // }
-    // eslint-disable-next-line no-console
     setTo(selectedOption?.value || '');
-    console.log(selectedOption?.value);
   };
 
   const handleSelectChangeFrom = (selectedOption: IOption | null): void => {
-    // if (selectedOption) {
-    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
-    // }
-    // eslint-disable-next-line no-console
     setFrom(selectedOption?.value || '');
-    console.log(selectedOption?.value);
   };
 
   const handleSelectChangeDate = (selectedOption: IOption | null): void => {
-    // if (selectedOption) {
-    //   dispatch(githubActions.setCurrentRepo(selectedOption.value));
-    // }
     setStartTime(selectedOption?.value || '');
-    // eslint-disable-next-line no-console
-    console.log(selectedOption?.value);
   };
 
   const getOptions = async (): Promise<IOption[] | undefined> => {
-    const airports = new Airports();
+    const airports = new AirportsApi();
     const allAirports = await airports.getAirports();
     const result: Array<any> = [];
-    allAirports.forEach(async (airport) => {
+    allAirports.forEach(async (airport: any) => {
       result.push({
-        value: airport._id,
+        value: airport.id,
         label: airport.name,
       });
     });
@@ -76,6 +60,16 @@ const BuyTickets: React.FC = () => {
 
   useEffect(() => {
     getOptions().then((result) => result && setAirports(result));
+  }, []);
+
+  const getOccupiedPlaces = async (): Promise<string[]> => {
+    const ticket = new TicketApi();
+    const allOccupiedPlaces = await ticket.getOccupiedPlaces();
+    return allOccupiedPlaces.map((placeNumber) => placeNumber.placeNumber);
+  };
+
+  useEffect(() => {
+    getOccupiedPlaces().then((result) => result && setOccupiedPlaces(result));
   }, []);
 
   const getTimeOptions = (): IOption[] | undefined => {
@@ -97,6 +91,7 @@ const BuyTickets: React.FC = () => {
         {from && to && startTime ? (
           <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
             <PlaneSeatsGrid
+              occupiedPlaces={occupiedPlaces}
               seatsCount={78}
               onSeatClick={onSeatClick}
               selected={selectedPlace}

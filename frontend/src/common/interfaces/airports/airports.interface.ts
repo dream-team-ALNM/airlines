@@ -1,4 +1,4 @@
 export interface IAirport {
   name: string;
-  _id: string;
+  id: string;
 }

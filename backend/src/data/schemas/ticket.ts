@@ -7,5 +7,5 @@ export const ticketSchema = new Schema({
   userID: ObjectId,
   scheduleID: ObjectId,
   price: Number,
-  placeNumber: Number,
+  placeNumber: String,
 });
