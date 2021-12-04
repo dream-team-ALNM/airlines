@@ -25,7 +25,13 @@ const BuyTickets: React.FC = () => {
   const [selectedPlace, setSelectedPlace] = useState<string[]>([]);
 
   const onSeatClick = (seatLabel: string): void => {
-    setSelectedPlace([...selectedPlace, seatLabel]);
+    if (selectedPlace.includes(seatLabel)) {
+      setSelectedPlace(
+        [...selectedPlace].filter((seat: string) => seat !== seatLabel),
+      );
+    } else {
+      setSelectedPlace([...selectedPlace, seatLabel]);
+    }
   };
 
   const handleSelectChangeTo = (selectedOption: IOption | null): void => {
