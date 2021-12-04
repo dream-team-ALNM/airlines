@@ -7,17 +7,19 @@ import PlaneSeatButton from '../plane-seat-button';
 import { seatStates } from 'common/enums';
 
 type Props = {
+  occupiedPlaces: string[];
+  businessPlaces: string[];
   seatsCount: number;
   selected: string[];
   onSeatClick: (seatLabel: string) => void;
 };
 
-const businessSeats = ['A01', 'A02', 'B01', 'B02', 'C02', 'D02'];
-
 const PlaneSeatsGrid: React.FC<Props> = ({
   seatsCount,
   onSeatClick,
   selected,
+  occupiedPlaces,
+  businessPlaces,
 }) => {
   const rowsCount = (seatsCount + 2) / 4;
   const rows: Array<string> = [...Array(rowsCount).keys()].map((rowNum) =>
@@ -59,11 +61,13 @@ const PlaneSeatsGrid: React.FC<Props> = ({
         }}
       >
         {topSeats.map((seatNum) => {
-          const seatState = selected.includes(seatNum)
-            ? seatStates.selected
-            : businessSeats.includes(seatNum)
-              ? seatStates.business
-              : seatStates.vacant;
+          const seatState = occupiedPlaces.includes(seatNum)
+            ? seatStates.occupied
+            : selected.includes(seatNum)
+              ? seatStates.selected
+              : businessPlaces.includes(seatNum)
+                ? seatStates.business
+                : seatStates.vacant;
           return (
             <PlaneSeatButton
               key={seatNum}
@@ -97,11 +101,13 @@ const PlaneSeatsGrid: React.FC<Props> = ({
         }}
       >
         {bottomSeats.map((seatNum) => {
-          const seatState = selected.includes(seatNum)
-            ? seatStates.selected
-            : businessSeats.includes(seatNum)
-              ? seatStates.business
-              : seatStates.vacant;
+          const seatState = occupiedPlaces.includes(seatNum)
+            ? seatStates.occupied
+            : selected.includes(seatNum)
+              ? seatStates.selected
+              : businessPlaces.includes(seatNum)
+                ? seatStates.business
+                : seatStates.vacant;
           return (
             <PlaneSeatButton
               key={seatNum}
