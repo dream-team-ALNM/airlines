@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Label } from 'components/common';
@@ -26,6 +27,8 @@ const BuyTickets: React.FC = () => {
   const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
   const [startDate, setStartDate] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
+  const [endDate, setEndDate] = useState<string>('');
+  const [endTime, setEndTime] = useState<string>('');
 
   const onSeatClick = (seatLabel: string): void => {
     if (selectedPlaces.includes(seatLabel)) {
@@ -53,7 +56,11 @@ const BuyTickets: React.FC = () => {
 
   const getOptionsTime = async (): Promise<IOption[] | undefined> => {
     const schedule = new ScheduleApi();
-    const allTimes = await schedule.getTimes({ from, to, startDate });
+    const allTimes = await schedule.getTimes({
+      from,
+      to,
+      startDate: startDate,
+    });
     const result: Array<any> = [];
     allTimes.forEach(async (time) => {
       result.push({
@@ -78,6 +85,14 @@ const BuyTickets: React.FC = () => {
     return result;
   };
 
+  const getOptionsEnd = async (): Promise<
+    { [key: string]: string } | undefined
+  > => {
+    const schedule = new ScheduleApi();
+    const end = await schedule.getEnd({ id: scheduleId });
+    return { endDate: end.endDate, endTime: end.endTime };
+  };
+
   useEffect(() => {
     getOptions().then((result) => result && setAirports(result));
   }, []);
@@ -97,6 +112,17 @@ const BuyTickets: React.FC = () => {
       getOptionsTime().then((result) => result && setStartTimes(result));
     }
   }, [from, to, startDate]);
+
+  useEffect(() => {
+    if (scheduleId) {
+      getOptionsEnd().then((result) => {
+        if (result) {
+          setEndDate(result.endDate);
+          setEndTime(result.endTime);
+        }
+      });
+    }
+  }, [scheduleId]);
 
   const handleDateChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -180,8 +206,12 @@ const BuyTickets: React.FC = () => {
             handleSelectChange={handleSelectChangeTime}
             placeholder="Start time"
           />
-          <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
-          <div className={getAllowedClasses(styles.endDateField)}>End time</div>
+          <div className={getAllowedClasses(styles.endDateField)}>
+            {endDate || 'End date'}
+          </div>
+          <div className={getAllowedClasses(styles.endDateField)}>
+            {endTime || 'End time'}
+          </div>
           <div className={getAllowedClasses(styles.priceField)}>
             {price || 'Price'}
           </div>
