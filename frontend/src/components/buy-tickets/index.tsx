@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
-import airwaysImage from '../../assets/img/airways.png';
+import planeGif from '../../assets/img/planegif.gif';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
@@ -71,6 +71,7 @@ const BuyTickets: React.FC = () => {
         label: airport.name,
       });
     });
+    console.log(allAirports);
     return result;
   };
 
@@ -95,7 +96,12 @@ const BuyTickets: React.FC = () => {
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         {from && to && startTime ? (
-          <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
+          <div
+            className={getAllowedClasses(
+              styles.buyTicketsPlaneSchema,
+              'shadow',
+            )}
+          >
             <PlaneSeatsGrid
               seatsCount={78}
               onSeatClick={onSeatClick}
@@ -104,8 +110,8 @@ const BuyTickets: React.FC = () => {
           </div>
         ) : (
           <img
-            src={airwaysImage}
-            className={getAllowedClasses(styles.menuImage)}
+            src={planeGif}
+            className={getAllowedClasses(styles.menuImage, 'shadow')}
           />
         )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>

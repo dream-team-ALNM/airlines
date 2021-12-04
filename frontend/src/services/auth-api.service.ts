@@ -19,6 +19,10 @@ class AuthApi {
       contentType: ContentType.JSON,
     });
   }
+
+  public async getInfoUser(id: string): Promise<IUser> {
+    return new Http().load(`${this.BASE}/account/${id}`);
+  }
 }
 
 export { AuthApi };

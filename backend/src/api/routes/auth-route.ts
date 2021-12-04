@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { run } from '../../common/helpers/route.helper';
-import { login, register } from '../../services';
+import { login, register, getUserInfo } from '../../services';
 
 const router: Router = Router();
 
@@ -12,6 +12,11 @@ router.post(
 router.post(
   '/signup',
   run((req) => register(req.body)),
+);
+
+router.get(
+  '/account/:id',
+  run((req) => getUserInfo(req.params.id)),
 );
 
 export default router;
