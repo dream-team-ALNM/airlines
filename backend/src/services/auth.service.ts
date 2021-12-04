@@ -1,4 +1,4 @@
-/* eslint-disable */
+import mongoose from 'mongoose';
 import { hash, verify } from '../common/utils';
 import { userRepository } from '../data/repositories';
 import { HttpError } from '../common/errors';
@@ -23,7 +23,8 @@ export const login = async (body: ILoginUser): Promise<IUser> => {
       message: HttpErrorMessage.INVALID_LOGIN_DATA,
     });
   }
-  return {...user, id: user._id} as IUser;
+  const { email, fullName, age, _id } = user;
+  return { email, fullName, age, id: _id } as IUser;
 };
 
 export const register = async (body: ILoginUser): Promise<IUser> => {
@@ -50,6 +51,14 @@ export const register = async (body: ILoginUser): Promise<IUser> => {
   const createdUser = await userRepository.getOne({
     email: body.email.toLowerCase(),
   });
+  const { email, fullName, age, _id } = createdUser;
+  return { email, fullName, age, id: _id } as IUser;
+};
 
-  return {...createdUser, id: createdUser._id} as IUser;
+export const getUserInfo = async (userId: string): Promise<IUser> => {
+  const user = await userRepository.getOne({
+    _id: mongoose.Types.ObjectId(userId),
+  });
+  const { email, fullName, age, _id } = user;
+  return { email, fullName, age, id: _id } as IUser;
 };

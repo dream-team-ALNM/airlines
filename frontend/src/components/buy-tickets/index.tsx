@@ -2,15 +2,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
-import airwaysImage from '../../assets/img/airways.png';
+import planeGif from '../../assets/img/planegif.gif';
 import { IOption } from '../../common/interfaces/components/option.interface';
 import Select from './select';
 import PlaneSeatsGrid from './plane-seats-grid';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'hooks';
-import { AirportsApi, TicketApi } from '../../services';
+import { AirportsApi, TicketApi, ScheduleApi } from '../../services';
 import styles from './styles.module.scss';
 import { getAllowedClasses } from 'helpers';
+
+const businessPlaces = ['A01', 'A02', 'B01', 'B02', 'C02', 'D02'];
 
 const BuyTickets: React.FC = () => {
   const [inputDateType, setType] = useState('text');
@@ -18,8 +20,10 @@ const BuyTickets: React.FC = () => {
   const [occupiedPlaces, setOccupiedPlaces] = useState<string[]>([]);
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
-  const [startTime, setStartTime] = useState<string>('');
+  const [startTimes, setStartTimes] = useState<IOption[]>([]);
+  const [scheduleId, setScheduleId] = useState<string>('');
   const [selectedPlace, setSelectedPlace] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState<string>('');
 
   const onSeatClick = (seatLabel: string): void => {
     if (selectedPlace.includes(seatLabel)) {
@@ -41,8 +45,21 @@ const BuyTickets: React.FC = () => {
     setFrom(selectedOption?.value || '');
   };
 
-  const handleSelectChangeDate = (selectedOption: IOption | null): void => {
-    setStartTime(selectedOption?.value || '');
+  const handleSelectChangeTime = (selectedOption: IOption | null): void => {
+    setScheduleId(selectedOption?.value || '');
+  };
+
+  const getOptionsTime = async (): Promise<IOption[] | undefined> => {
+    const schedule = new ScheduleApi();
+    const allTimes = await schedule.getTimes({ from, to, startDate });
+    const result: Array<any> = [];
+    allTimes.forEach(async (time) => {
+      result.push({
+        value: time.id,
+        label: time.value,
+      });
+    });
+    return result;
   };
 
   const getOptions = async (): Promise<IOption[] | undefined> => {
@@ -55,6 +72,7 @@ const BuyTickets: React.FC = () => {
         label: airport.name,
       });
     });
+    console.log(allAirports);
     return result;
   };
 
@@ -72,15 +90,17 @@ const BuyTickets: React.FC = () => {
     getOccupiedPlaces().then((result) => result && setOccupiedPlaces(result));
   }, []);
 
-  const getTimeOptions = (): IOption[] | undefined => {
-    return [{ value: '08:30', label: '08:30' }];
-    // if (!repos) {
-    //   return;
-    // }
-    // return repos.map((repo) => ({
-    //   value: repo,
-    //   label: repo,
-    // }));
+  useEffect(() => {
+    if (from && to && startDate) {
+      getOptionsTime().then((result) => result && setStartTimes(result));
+    }
+  }, [from, to, startDate]);
+
+  const handleDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const { value } = event.target;
+    setStartDate(value);
   };
 
   return (
@@ -88,19 +108,25 @@ const BuyTickets: React.FC = () => {
       <Menu />
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
-        {from && to && startTime ? (
-          <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
+        {from && to && scheduleId ? (
+          <div
+            className={getAllowedClasses(
+              styles.buyTicketsPlaneSchema,
+              'shadow',
+            )}
+          >
             <PlaneSeatsGrid
               occupiedPlaces={occupiedPlaces}
               seatsCount={78}
               onSeatClick={onSeatClick}
               selected={selectedPlace}
+              businessPlaces={businessPlaces}
             />
           </div>
         ) : (
           <img
-            src={airwaysImage}
-            className={getAllowedClasses(styles.menuImage)}
+            src={planeGif}
+            className={getAllowedClasses(styles.menuImage, 'shadow')}
           />
         )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
@@ -118,13 +144,14 @@ const BuyTickets: React.FC = () => {
             type={inputDateType}
             onFocus={(): void => setType('date')}
             onBlur={(): void => setType('text')}
+            onChange={handleDateChange}
             placeholder="Start Date"
             lang="en-US"
             min={new Date().toISOString().slice(0, 10)}
           />
           <Select
-            options={getTimeOptions()}
-            handleSelectChange={handleSelectChangeDate}
+            options={startTimes}
+            handleSelectChange={handleSelectChangeTime}
             placeholder="Start time"
           />
           <div className={getAllowedClasses(styles.endDateField)}>End Date</div>
