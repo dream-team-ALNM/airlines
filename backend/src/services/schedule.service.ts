@@ -21,11 +21,7 @@ export const getTime = async (
 
 export const getEnd = async (id: string): Promise<IEnd> => {
   const end = await schedulesRepository.getOne({
-    id: mongoose.Types.ObjectId(id),
+    _id: mongoose.Types.ObjectId(id),
   });
-  const endReduced = {
-    endTime: end.endTime,
-    endDate: end.endDate,
-  };
-  return endReduced as IEnd;
+  return { endTime: end.endTime, endDate: end.endDate } as IEnd;
 };
