@@ -211,7 +211,6 @@ const BuyTickets: React.FC = () => {
           <div
             className={getAllowedClasses(
               styles.buyTicketsPlaneSchema,
-              'shadow',
             )}
           >
             <PlaneSeatsGrid
@@ -225,7 +224,7 @@ const BuyTickets: React.FC = () => {
         ) : (
           <img
             src={planeGif}
-            className={getAllowedClasses(styles.planeImage, 'shadow')}
+            className={getAllowedClasses(styles.planeImage)}
           />
         )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
