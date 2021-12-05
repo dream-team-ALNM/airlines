@@ -8,12 +8,12 @@ import {
 
 export const getRoutes = async (id: string): Promise<IRoute[]> => {
   const tickets = await ticketRepository.getSome({
-    userID: mongoose.Types.ObjectId(id),
+    userId: mongoose.Types.ObjectId(id),
   });
   const routes: Array<{ [key: string]: string }> = [];
   for (const ticket of tickets) {
     const sch = await schedulesRepository.getOne({
-      _id: ticket.scheduleID,
+      _id: ticket.scheduleId,
     });
     const from = await airportsRepository.getOne({
       _id: sch.from,

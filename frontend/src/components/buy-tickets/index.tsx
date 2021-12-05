@@ -100,7 +100,7 @@ const BuyTickets: React.FC = () => {
 
   const getOccupiedPlaces = async (): Promise<string[]> => {
     const ticket = new TicketApi();
-    const allOccupiedPlaces = await ticket.getOccupiedPlaces();
+    const allOccupiedPlaces = await ticket.getOccupiedPlaces(scheduleId);
     return allOccupiedPlaces.map((placeNumber) => placeNumber.placeNumber);
   };
 
@@ -139,7 +139,7 @@ const BuyTickets: React.FC = () => {
   };
 
   useEffect(() => {
-    if (scheduleId && selectedPlaces.length) {
+    if (scheduleId) {
       const countOfSelectedBusinessPlaces = selectedPlaces.filter((place) =>
         businessPlaces.includes(place),
       ).length;

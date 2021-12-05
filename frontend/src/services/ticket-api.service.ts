@@ -5,8 +5,8 @@ import { Http } from './http.service';
 class TicketApi {
   private BASE = '/api/ticket';
 
-  public async getOccupiedPlaces(): Promise<IPlaceNumber[]> {
-    return new Http().load(`${this.BASE}/places`);
+  public async getOccupiedPlaces(scheduleId: string): Promise<IPlaceNumber[]> {
+    return new Http().load(`${this.BASE}/places/${scheduleId}`);
   }
 
   public async buyTicket(buyTicketPayload: ITicket[]): Promise<void> {

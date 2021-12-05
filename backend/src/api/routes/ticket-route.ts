@@ -5,8 +5,8 @@ import { getOccupiedPlaces, buyTicket } from '../../services';
 const router: Router = Router();
 
 router.get(
-  '/places',
-  run(() => getOccupiedPlaces()),
+  '/places/:id',
+  run((req) => getOccupiedPlaces(req.params.id)),
 );
 
 router.post(
