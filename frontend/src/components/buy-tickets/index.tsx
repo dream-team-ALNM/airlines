@@ -208,11 +208,7 @@ const BuyTickets: React.FC = () => {
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         {from && to && scheduleId ? (
-          <div
-            className={getAllowedClasses(
-              styles.buyTicketsPlaneSchema,
-            )}
-          >
+          <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
             <PlaneSeatsGrid
               occupiedPlaces={occupiedPlaces}
               seatsCount={78}
