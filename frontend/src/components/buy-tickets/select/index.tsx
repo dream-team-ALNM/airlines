@@ -7,12 +7,14 @@ type Props = {
   handleSelectChange(selectedOption: IOption | null): void;
   options: IOption[] | undefined;
   placeholder: string;
+  value?: IOption | null;
 };
 
 const SelectFromTo: React.FC<Props> = ({
   handleSelectChange,
   options,
   placeholder,
+  value,
 }) => {
   const { width } = useWindowDimensions();
   const selectWidth = width > 850 ? '17vw' : width > 600 ? '50vw' : '80vw';
@@ -20,6 +22,7 @@ const SelectFromTo: React.FC<Props> = ({
   const selectFontSize = width > 850 ? '1.25vw' : width > 600 ? '2vw' : '3vw';
   return (
     <Select
+      value={value}
       onChange={handleSelectChange}
       options={options}
       placeholder={placeholder}

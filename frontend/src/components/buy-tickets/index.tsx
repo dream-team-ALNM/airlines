@@ -100,6 +100,8 @@ const BuyTickets: React.FC = () => {
   }, []);
 
   const getOccupiedPlaces = async (): Promise<string[]> => {
+    console.log(scheduleId);
+
     const ticket = new TicketApi();
     const allOccupiedPlaces = await ticket.getOccupiedPlaces();
     return allOccupiedPlaces.map((placeNumber) => placeNumber.placeNumber);
@@ -107,7 +109,7 @@ const BuyTickets: React.FC = () => {
 
   useEffect(() => {
     getOccupiedPlaces().then((result) => result && setOccupiedPlaces(result));
-  }, []);
+  }, [scheduleId]);
 
   useEffect(() => {
     if (from && to && startDate) {
@@ -167,6 +169,16 @@ const BuyTickets: React.FC = () => {
   }, [selectedPlaces, scheduleId]);
 
   const handleBuyTickets = async (): Promise<void> => {
+    setFrom('');
+    setTo('');
+    setScheduleId('');
+    setSelectedPlaces([]);
+    setStartDate('');
+    setPrice(0);
+    setEndDate('');
+    setEndTime('');
+    setFullName('');
+    toast.success('Ticket was successfully purchased');
     const ticket = new TicketApi();
     const userId = localStorage.getItem('user') || '';
     const { price, businessPrice } = await getPrices();
@@ -190,16 +202,6 @@ const BuyTickets: React.FC = () => {
         })),
       );
     }
-
-    setFrom('');
-    setTo('');
-    setScheduleId('');
-    setSelectedPlaces([]);
-    setStartDate('');
-    setPrice(0);
-    setEndDate('');
-    setEndTime('');
-    toast.success('Ticket was successfully bought');
   };
 
   return (
@@ -225,11 +227,13 @@ const BuyTickets: React.FC = () => {
         )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <Select
+            value={airports.find((airport) => airport.value === from) || null}
             options={airports}
             handleSelectChange={handleSelectChangeFrom}
             placeholder="From"
           />
           <Select
+            value={airports.find((airport) => airport.value === to) || null}
             options={airports.filter((airport) => airport.value != from)}
             handleSelectChange={handleSelectChangeTo}
             placeholder="To"
@@ -242,8 +246,13 @@ const BuyTickets: React.FC = () => {
             placeholder="Start Date"
             lang="en-US"
             min={new Date().toISOString().slice(0, 10)}
+            value={startDate}
           />
           <Select
+            value={
+              startTimes.find((startTime) => startTime.value === scheduleId) ||
+              null
+            }
             options={startTimes}
             handleSelectChange={handleSelectChangeTime}
             placeholder="Start time"
