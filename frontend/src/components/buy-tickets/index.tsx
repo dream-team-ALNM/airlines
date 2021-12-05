@@ -139,22 +139,24 @@ const BuyTickets: React.FC = () => {
   };
 
   useEffect(() => {
-    const countOfSelectedBusinessPlaces = selectedPlaces.filter((place) =>
-      businessPlaces.includes(place),
-    ).length;
-    const countOfSelectedNotBusinessPlaces =
-      selectedPlaces.length - countOfSelectedBusinessPlaces;
+    if (scheduleId && selectedPlaces.length) {
+      const countOfSelectedBusinessPlaces = selectedPlaces.filter((place) =>
+        businessPlaces.includes(place),
+      ).length;
+      const countOfSelectedNotBusinessPlaces =
+        selectedPlaces.length - countOfSelectedBusinessPlaces;
 
-    getPrices().then(
-      ({ price, businessPrice }) =>
-        price &&
-        businessPrice &&
-        setPrice(
-          countOfSelectedBusinessPlaces * businessPrice +
-            countOfSelectedNotBusinessPlaces * price,
-        ),
-    );
-  }, [selectedPlaces]);
+      getPrices().then(
+        ({ price, businessPrice }) =>
+          price &&
+          businessPrice &&
+          setPrice(
+            countOfSelectedBusinessPlaces * businessPrice +
+              countOfSelectedNotBusinessPlaces * price,
+          ),
+      );
+    }
+  }, [selectedPlaces, scheduleId]);
 
   const handleBuyTickets = async (): Promise<void> => {
     const ticket = new TicketApi();

@@ -8,4 +8,4 @@ export const ticketSchema = new Schema({
   scheduleId: ObjectId,
   price: Number,
   placeNumber: String,
-});
+}, { versionKey: false });

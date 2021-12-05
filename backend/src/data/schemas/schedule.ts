@@ -11,4 +11,4 @@ export const scheduleSchema = new Schema({
   endTime: String,
   from: ObjectId,
   to: ObjectId,
-});
+}, { versionKey: false });

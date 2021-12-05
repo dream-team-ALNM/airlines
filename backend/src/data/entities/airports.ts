@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 
 export interface IAirportEntity extends mongoose.Document {
   name?: string;
-  id?: string;
+  id?: ObjectId;
 }

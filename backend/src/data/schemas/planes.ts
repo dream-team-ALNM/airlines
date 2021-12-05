@@ -7,4 +7,4 @@ export const planesSchema = new Schema({
   name: String,
   price: Number,
   businessPrice: Number,
-});
+}, { versionKey: false });
