@@ -1,7 +1,7 @@
 export interface ITicket {
   id?: string;
-  userID: string,
-  scheduleID: string,
-  price: number,
-  placeNumber: string,
+  userId: string;
+  scheduleId: string;
+  price: number;
+  placeNumber: string;
 }

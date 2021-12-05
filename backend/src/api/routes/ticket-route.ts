@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { run } from '../../common/helpers/route.helper';
-import { getOccupiedPlaces } from '../../services';
+import { getOccupiedPlaces, buyTicket } from '../../services';
 
 const router: Router = Router();
 
@@ -9,4 +9,8 @@ router.get(
   run(() => getOccupiedPlaces()),
 );
 
+router.post(
+  '/',
+  run((req) => buyTicket(req.body)),
+);
 export default router;

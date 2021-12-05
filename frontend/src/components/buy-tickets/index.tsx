@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { toast } from 'react-toastify';
 import { Menu, Label } from 'components/common';
 import buyTicketsIcon from '../../assets/img/buy-tickets.png';
 import planeGif from '../../assets/img/planegif.gif';
@@ -155,6 +156,29 @@ const BuyTickets: React.FC = () => {
     );
   }, [selectedPlaces]);
 
+  const handleBuyTickets = async (): Promise<void> => {
+    const ticket = new TicketApi();
+    const userId = localStorage.getItem('user') || '';
+    const { price, businessPrice } = await getPrices();
+    await ticket.buyTicket(
+      selectedPlaces.map((place) => ({
+        userId,
+        scheduleId,
+        placeNumber: place,
+        price: businessPlaces.includes(place) ? businessPrice : price,
+      })),
+    );
+    setFrom('');
+    setTo('');
+    setScheduleId('');
+    setSelectedPlaces([]);
+    setStartDate('');
+    setPrice(0);
+    setEndDate('');
+    setEndTime('');
+    toast.success('Ticket was successfully bought');
+  };
+
   return (
     <>
       <Menu />
@@ -217,7 +241,9 @@ const BuyTickets: React.FC = () => {
           </div>
           <input placeholder="Full Name" />
           <div className={getAllowedClasses(styles.buttonContainer)}>
-            <Button variant="success">buy</Button>
+            <Button variant="success" onClick={handleBuyTickets}>
+              buy
+            </Button>
           </div>
         </div>
       </div>
