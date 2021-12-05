@@ -8,4 +8,4 @@ export const userSchema = new Schema({
   password: String,
   fullName: String,
   age: Number,
-});
+}, { versionKey: false });
