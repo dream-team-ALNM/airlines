@@ -30,6 +30,7 @@ const BuyTickets: React.FC = () => {
   const [price, setPrice] = useState<number>(0);
   const [endDate, setEndDate] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
+  const [fullName, setFullName] = useState<string>('');
 
   const onSeatClick = (seatLabel: string): void => {
     if (selectedPlaces.includes(seatLabel)) {
@@ -132,6 +133,13 @@ const BuyTickets: React.FC = () => {
     setStartDate(value);
   };
 
+  const handleFullNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const { value } = event.target;
+    setFullName(value);
+  };
+
   const getPrices = async (): Promise<IPrices> => {
     const planes = new PlanesApi();
     const prices = await planes.getPrices(scheduleId);
@@ -162,14 +170,27 @@ const BuyTickets: React.FC = () => {
     const ticket = new TicketApi();
     const userId = localStorage.getItem('user') || '';
     const { price, businessPrice } = await getPrices();
-    await ticket.buyTicket(
-      selectedPlaces.map((place) => ({
-        userId,
-        scheduleId,
-        placeNumber: place,
-        price: businessPlaces.includes(place) ? businessPrice : price,
-      })),
-    );
+    if (!userId) {
+      await ticket.buyTicket(
+        selectedPlaces.map((place) => ({
+          userId,
+          scheduleId,
+          placeNumber: place,
+          price: businessPlaces.includes(place) ? businessPrice : price,
+          fullName,
+        })),
+      );
+    } else {
+      await ticket.buyTicket(
+        selectedPlaces.map((place) => ({
+          userId,
+          scheduleId,
+          placeNumber: place,
+          price: businessPlaces.includes(place) ? businessPrice : price,
+        })),
+      );
+    }
+
     setFrom('');
     setTo('');
     setScheduleId('');
@@ -241,7 +262,13 @@ const BuyTickets: React.FC = () => {
           <div className={getAllowedClasses(styles.priceField)}>
             {price || 'Price'}
           </div>
-          <input placeholder="Full Name" />
+          {!localStorage.getItem('user') && (
+            <input
+              placeholder="Full Name"
+              value={fullName}
+              onChange={handleFullNameChange}
+            />
+          )}
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success" onClick={handleBuyTickets}>
               buy
