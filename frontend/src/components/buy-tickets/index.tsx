@@ -30,6 +30,7 @@ const BuyTickets: React.FC = () => {
   const [price, setPrice] = useState<number>(0);
   const [endDate, setEndDate] = useState<string>('');
   const [endTime, setEndTime] = useState<string>('');
+  const [fullName, setFullName] = useState<string>('');
 
   const onSeatClick = (seatLabel: string): void => {
     if (selectedPlaces.includes(seatLabel)) {
@@ -99,6 +100,8 @@ const BuyTickets: React.FC = () => {
   }, []);
 
   const getOccupiedPlaces = async (): Promise<string[]> => {
+    console.log(scheduleId);
+
     const ticket = new TicketApi();
     const allOccupiedPlaces = await ticket.getOccupiedPlaces(scheduleId);
     return allOccupiedPlaces.map((placeNumber) => placeNumber.placeNumber);
@@ -106,7 +109,7 @@ const BuyTickets: React.FC = () => {
 
   useEffect(() => {
     getOccupiedPlaces().then((result) => result && setOccupiedPlaces(result));
-  }, []);
+  }, [scheduleId]);
 
   useEffect(() => {
     if (from && to && startDate) {
@@ -130,6 +133,13 @@ const BuyTickets: React.FC = () => {
   ): void => {
     const { value } = event.target;
     setStartDate(value);
+  };
+
+  const handleFullNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    const { value } = event.target;
+    setFullName(value);
   };
 
   const getPrices = async (): Promise<IPrices> => {
@@ -159,17 +169,6 @@ const BuyTickets: React.FC = () => {
   }, [selectedPlaces, scheduleId]);
 
   const handleBuyTickets = async (): Promise<void> => {
-    const ticket = new TicketApi();
-    const userId = localStorage.getItem('user') || '';
-    const { price, businessPrice } = await getPrices();
-    await ticket.buyTicket(
-      selectedPlaces.map((place) => ({
-        userId,
-        scheduleId,
-        placeNumber: place,
-        price: businessPlaces.includes(place) ? businessPrice : price,
-      })),
-    );
     setFrom('');
     setTo('');
     setScheduleId('');
@@ -178,7 +177,31 @@ const BuyTickets: React.FC = () => {
     setPrice(0);
     setEndDate('');
     setEndTime('');
-    toast.success('Ticket was successfully bought');
+    setFullName('');
+    toast.success('Ticket was successfully purchased');
+    const ticket = new TicketApi();
+    const userId = localStorage.getItem('user') || '';
+    const { price, businessPrice } = await getPrices();
+    if (!userId) {
+      await ticket.buyTicket(
+        selectedPlaces.map((place) => ({
+          userId,
+          scheduleId,
+          placeNumber: place,
+          price: businessPlaces.includes(place) ? businessPrice : price,
+          fullName,
+        })),
+      );
+    } else {
+      await ticket.buyTicket(
+        selectedPlaces.map((place) => ({
+          userId,
+          scheduleId,
+          placeNumber: place,
+          price: businessPlaces.includes(place) ? businessPrice : price,
+        })),
+      );
+    }
   };
 
   return (
@@ -187,12 +210,7 @@ const BuyTickets: React.FC = () => {
       <Label name="Купівля авіаквитків" iconPath={buyTicketsIcon} />
       <div className={getAllowedClasses(styles.buyTicketsContainer)}>
         {from && to && scheduleId ? (
-          <div
-            className={getAllowedClasses(
-              styles.buyTicketsPlaneSchema,
-              'shadow',
-            )}
-          >
+          <div className={getAllowedClasses(styles.buyTicketsPlaneSchema)}>
             <PlaneSeatsGrid
               occupiedPlaces={occupiedPlaces}
               seatsCount={78}
@@ -204,16 +222,18 @@ const BuyTickets: React.FC = () => {
         ) : (
           <img
             src={planeGif}
-            className={getAllowedClasses(styles.planeImage, 'shadow')}
+            className={getAllowedClasses(styles.planeImage)}
           />
         )}
         <div className={getAllowedClasses(styles.buyTicketsForms)}>
           <Select
+            value={airports.find((airport) => airport.value === from) || null}
             options={airports}
             handleSelectChange={handleSelectChangeFrom}
             placeholder="From"
           />
           <Select
+            value={airports.find((airport) => airport.value === to) || null}
             options={airports.filter((airport) => airport.value != from)}
             handleSelectChange={handleSelectChangeTo}
             placeholder="To"
@@ -226,8 +246,13 @@ const BuyTickets: React.FC = () => {
             placeholder="Start Date"
             lang="en-US"
             min={new Date().toISOString().slice(0, 10)}
+            value={startDate}
           />
           <Select
+            value={
+              startTimes.find((startTime) => startTime.value === scheduleId) ||
+              null
+            }
             options={startTimes}
             handleSelectChange={handleSelectChangeTime}
             placeholder="Start time"
@@ -241,7 +266,13 @@ const BuyTickets: React.FC = () => {
           <div className={getAllowedClasses(styles.priceField)}>
             {price || 'Price'}
           </div>
-          <input placeholder="Full Name" />
+          {!localStorage.getItem('user') && (
+            <input
+              placeholder="Full Name"
+              value={fullName}
+              onChange={handleFullNameChange}
+            />
+          )}
           <div className={getAllowedClasses(styles.buttonContainer)}>
             <Button variant="success" onClick={handleBuyTickets}>
               buy

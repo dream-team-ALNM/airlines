@@ -10,7 +10,7 @@ class TicketApi {
   }
 
   public async buyTicket(buyTicketPayload: ITicket[]): Promise<void> {
-    return new Http().load(`${this.BASE}/places`, {
+    return new Http().load(this.BASE, {
       method: HttpMethod.POST,
       payload: JSON.stringify(buyTicketPayload),
       contentType: ContentType.JSON,
