@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable no-console */
 import Avatar from 'react-avatar';
+import { Modal } from 'react-bootstrap';
 import { Menu, Label } from 'components/common';
 import accountIcon from '../../assets/img/account.png';
 import turtle from '../../assets/img/turtle.png';
@@ -9,18 +11,31 @@ import { useEffect, useState } from 'hooks';
 
 import styles from './styles.module.scss';
 import { AuthApi, AccountApi } from 'services';
-import { IUser, IRoute } from 'common/interfaces';
+import { IUser, IRoute, ITicketInfo } from 'common/interfaces';
+
+const businessPlaces = ['A01', 'A02', 'B01', 'B02', 'C02', 'D02'];
 
 const Account: React.FC = () => {
   const [age, setAge] = useState<number>(18);
   const [fullName, setFullName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [routes, setRoutes] = useState<IRoute[]>([]);
+  const [chosenRoute, setChosenRoute] = useState<string>('');
+  const [ticketInfo, setTicketInfo] = useState<ITicketInfo>();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = (): void => setShowModal(false);
+  const handleShow =
+    (id: string): (() => void) =>
+    (): void => {
+      setShowModal(true);
+      setChosenRoute(id);
+    };
 
   const getUser = async (): Promise<IUser> => {
     const auth = new AuthApi();
     const user = await auth.getInfoUser(localStorage.getItem('user') || '');
-    console.log(user);
     return user;
   };
 
@@ -30,6 +45,12 @@ const Account: React.FC = () => {
       id: localStorage.getItem('user') || '',
     });
     return routes;
+  };
+
+  const getTicketInfo = async (): Promise<ITicketInfo> => {
+    const account = new AccountApi();
+    const ticketInformation = await account.getTicketInfo({ id: chosenRoute });
+    return ticketInformation;
   };
 
   useEffect(() => {
@@ -43,11 +64,7 @@ const Account: React.FC = () => {
       if (result.email) {
         setEmail(result.email);
       }
-      console.log(result);
     });
-  }, []);
-
-  useEffect(() => {
     if (localStorage.getItem('user')) {
       getAccountRoutes().then((result) => {
         if (result) {
@@ -56,6 +73,20 @@ const Account: React.FC = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (chosenRoute) {
+      getTicketInfo().then((result) => {
+        if (result) {
+          setTicketInfo(result);
+        }
+      });
+    }
+  }, [chosenRoute]);
+
+  useEffect(() => {
+    console.log(ticketInfo);
+  }, [ticketInfo]);
 
   return (
     <>
@@ -91,12 +122,60 @@ const Account: React.FC = () => {
                   endDate={endDate}
                   startTime={startTime}
                   endTime={endTime}
+                  onClick={handleShow(id)}
                 />
               ),
             )}
           </div>
         </div>
       </div>
+      <Modal
+        show={showModal}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Your Ticket</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className={styles.modal}>
+          <div className={styles.container1}>
+            <span className={getAllowedClasses(styles.fullName)}>
+              {fullName}
+            </span>
+            <span className={getAllowedClasses(styles.planeType)}>
+              {ticketInfo?.planeName}
+            </span>
+            <div className={styles.container11}>
+              <span className={getAllowedClasses(styles.placeNumber)}>
+                {ticketInfo?.placeNumber}
+              </span>
+              <span className={getAllowedClasses(styles.placeClass)}>
+                {businessPlaces.includes(ticketInfo?.placeNumber ?? '')
+                  ? 'business'
+                  : 'economy'}
+              </span>
+            </div>
+          </div>
+          <div className={styles.container2}>
+            <span className={getAllowedClasses(styles.fromAirport)}>
+              {routes.find((route) => route.id === chosenRoute)?.from}
+            </span>
+            <span className={getAllowedClasses(styles.toAirport)}>
+              {routes.find((route) => route.id === chosenRoute)?.to}
+            </span>
+            <div className={styles.container21}>
+              <span className={getAllowedClasses(styles.startDate)}>
+                {routes.find((route) => route.id === chosenRoute)?.startDate}
+              </span>
+              <span className={getAllowedClasses(styles.startTime)}>
+                {routes.find((route) => route.id === chosenRoute)?.startTime}
+              </span>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
