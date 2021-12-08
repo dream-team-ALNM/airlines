@@ -140,22 +140,40 @@ const Account: React.FC = () => {
           <Modal.Title>Your Ticket</Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modal}>
-          <span>{fullName}</span>
-          <span>{ticketInfo?.planeName}</span>
-          <span>{ticketInfo?.placeNumber}</span>
-          <span>
-            {businessPlaces.includes(ticketInfo?.placeNumber ?? '')
-              ? 'business'
-              : 'economy'}
-          </span>
-          <span>{routes.find((route) => route.id === chosenRoute)?.from}</span>
-          <span>{routes.find((route) => route.id === chosenRoute)?.to}</span>
-          <span>
-            {routes.find((route) => route.id === chosenRoute)?.startDate}
-          </span>
-          <span>
-            {routes.find((route) => route.id === chosenRoute)?.startTime}
-          </span>
+          <div className={styles.container1}>
+            <span className={getAllowedClasses(styles.fullName)}>
+              {fullName}
+            </span>
+            <span className={getAllowedClasses(styles.planeType)}>
+              {ticketInfo?.planeName}
+            </span>
+            <div className={styles.container11}>
+              <span className={getAllowedClasses(styles.placeNumber)}>
+                {ticketInfo?.placeNumber}
+              </span>
+              <span className={getAllowedClasses(styles.placeClass)}>
+                {businessPlaces.includes(ticketInfo?.placeNumber ?? '')
+                  ? 'business'
+                  : 'economy'}
+              </span>
+            </div>
+          </div>
+          <div className={styles.container2}>
+            <span className={getAllowedClasses(styles.fromAirport)}>
+              {routes.find((route) => route.id === chosenRoute)?.from}
+            </span>
+            <span className={getAllowedClasses(styles.toAirport)}>
+              {routes.find((route) => route.id === chosenRoute)?.to}
+            </span>
+            <div className={styles.container21}>
+              <span className={getAllowedClasses(styles.startDate)}>
+                {routes.find((route) => route.id === chosenRoute)?.startDate}
+              </span>
+              <span className={getAllowedClasses(styles.startTime)}>
+                {routes.find((route) => route.id === chosenRoute)?.startTime}
+              </span>
+            </div>
+          </div>
         </Modal.Body>
       </Modal>
     </>
