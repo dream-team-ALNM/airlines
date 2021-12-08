@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 /* eslint-disable no-console */
 import Avatar from 'react-avatar';
 import { Modal } from 'react-bootstrap';
@@ -12,6 +13,8 @@ import styles from './styles.module.scss';
 import { AuthApi, AccountApi } from 'services';
 import { IUser, IRoute, ITicketInfo } from 'common/interfaces';
 
+const businessPlaces = ['A01', 'A02', 'B01', 'B02', 'C02', 'D02'];
+
 const Account: React.FC = () => {
   const [age, setAge] = useState<number>(18);
   const [fullName, setFullName] = useState<string>('');
@@ -24,11 +27,11 @@ const Account: React.FC = () => {
 
   const handleClose = (): void => setShowModal(false);
   const handleShow =
-    (id: string): () => void =>
-      (): void => {
-        setShowModal(true);
-        setChosenRoute(id);
-      };
+    (id: string): (() => void) =>
+    (): void => {
+      setShowModal(true);
+      setChosenRoute(id);
+    };
 
   const getUser = async (): Promise<IUser> => {
     const auth = new AuthApi();
@@ -136,7 +139,24 @@ const Account: React.FC = () => {
         <Modal.Header closeButton>
           <Modal.Title>Your Ticket</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, youre reading this text in a modal!</Modal.Body>
+        <Modal.Body className={styles.modal}>
+          <span>{fullName}</span>
+          <span>{ticketInfo?.planeName}</span>
+          <span>{ticketInfo?.placeNumber}</span>
+          <span>
+            {businessPlaces.includes(ticketInfo?.placeNumber ?? '')
+              ? 'business'
+              : 'economy'}
+          </span>
+          <span>{routes.find((route) => route.id === chosenRoute)?.from}</span>
+          <span>{routes.find((route) => route.id === chosenRoute)?.to}</span>
+          <span>
+            {routes.find((route) => route.id === chosenRoute)?.startDate}
+          </span>
+          <span>
+            {routes.find((route) => route.id === chosenRoute)?.startTime}
+          </span>
+        </Modal.Body>
       </Modal>
     </>
   );

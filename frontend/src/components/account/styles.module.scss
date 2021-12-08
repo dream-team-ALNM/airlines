@@ -64,3 +64,14 @@
     }
   }
 }
+
+.modal {
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  background: url('../../assets/img/boarding-pass.png');
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
