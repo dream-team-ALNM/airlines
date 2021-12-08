@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
-import { IRoute } from '~/common/interfaces';
+import { IRoute, ITicketInfo } from '~/common/interfaces';
 import {
   ticketRepository,
   schedulesRepository,
   airportsRepository,
+  planesRepository,
 } from '../data/repositories';
 
 export const getRoutes = async (id: string): Promise<IRoute[]> => {
@@ -40,4 +41,20 @@ export const getRoutes = async (id: string): Promise<IRoute[]> => {
     endTime: route.endTime,
     id: route.id,
   })) as IRoute[];
+};
+
+export const getTicketInfo = async (id: string): Promise<ITicketInfo> => {
+  const ticket = await ticketRepository.getOne({
+    _id: mongoose.Types.ObjectId(id),
+  });
+  const schedule = await schedulesRepository.getOne({
+    _id: ticket.scheduleId,
+  });
+  const plane = await planesRepository.getOne({
+    _id: schedule.planeId,
+  });
+  return {
+    placeNumber: ticket.placeNumber,
+    planeName: plane.name,
+  } as ITicketInfo;
 };

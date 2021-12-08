@@ -9,6 +9,7 @@ type Props = {
   endDate: string;
   startTime: string;
   endTime: string;
+  onClick: () => void;
 };
 
 const RouteListItemm: React.FC<Props> = ({
@@ -18,8 +19,9 @@ const RouteListItemm: React.FC<Props> = ({
   endDate,
   startTime,
   endTime,
+  onClick,
 }) => (
-  <div className={getAllowedClasses(styles.routeContainer)}>
+  <div className={getAllowedClasses(styles.routeContainer)} onClick={onClick}>
     <span
       className={getAllowedClasses(
         styles.fromTo,

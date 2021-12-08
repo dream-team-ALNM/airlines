@@ -264,7 +264,7 @@ const BuyTickets: React.FC = () => {
             {endTime || 'End time'}
           </div>
           <div className={getAllowedClasses(styles.priceField)}>
-            {price || 'Price'}
+            {price ? price + ' грн' : 'Price'}
           </div>
           {!localStorage.getItem('user') && (
             <input
