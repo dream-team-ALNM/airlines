@@ -1,0 +1,14 @@
+.infoPlaneImage {
+  width: 48%;
+  margin-left: 1.4rem;
+  margin-top: 1.4rem;
+
+  @media only screen and (max-width: 800px) {
+    margin: 1rem 1.4rem;
+    width: calc(100% - 2.8rem);
+  }
+}
+
+.infoText {
+  margin: 1rem 1.4rem;
+}

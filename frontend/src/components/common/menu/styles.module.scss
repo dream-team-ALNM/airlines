@@ -1,0 +1,59 @@
+.menuContainer {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 5%;
+  background-color: #cbdbea;
+  margin-bottom: 25px;
+
+  .menuNameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .menuImage {
+      height: 80px;
+
+      @media only screen and (max-width: 600px) {
+        height: 50px;
+      }
+
+      @media only screen and (max-width: 400px) {
+        height: 40px;
+      }
+    }
+
+    .menuName {
+      font-size: 30px;
+      line-height: 30px;
+      font-weight: 700;
+      color: #515d72;
+
+      @media only screen and (max-width: 1000px) {
+        font-size: 25px;
+        line-height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      @media only screen and (max-width: 600px) {
+        font-size: 20px;
+        line-height: 20px;
+      }
+
+      @media only screen and (max-width: 400px) {
+        font-size: 17px;
+        line-height: 17px;
+      }
+
+      @media only screen and (max-width: 410px) {
+        :first-child {
+          display: none;
+        }
+      }
+    }
+  }
+}

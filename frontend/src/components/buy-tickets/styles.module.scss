@@ -1,0 +1,138 @@
+.buyTicketsContainer {
+  padding: 1em 1.4rem;
+  width: 100%;
+  height: 40vw;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 850px) {
+    width: 100vw;
+    height: auto;
+  }
+  @media only screen and (max-width: 600px) {
+    padding-right: 1.9rem;
+  }
+  .planeImage {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    @media only screen and (max-width: 850px) {
+      width: 100%;
+      height: 50vw;
+    }
+
+    @media only screen and (max-width: 600px) {
+      width: 100%;
+      height: 213vw;
+    }
+  }
+  .buyTicketsPlaneSchema {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 22%;
+    padding-right: 6%;
+    background: url('../../assets/img/airplane-seats.jpg');
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+
+    @media only screen and (max-width: 850px) {
+      width: 100%;
+      height: 50vw;
+      padding-left: 30%;
+      padding-right: 1%;
+    }
+
+    @media only screen and (max-width: 600px) {
+      background: url('../../assets/img/airplane-seats-mobile.jpg');
+      width: 100%;
+      height: 213vw;
+      background-position: center;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      padding-left: 2.5%;
+      padding-top: 40%;
+    }
+  }
+
+  .buyTicketsForms {
+    margin: 0 1.4rem;
+    padding: 0.95rem 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (max-width: 850px) {
+      height: 60vw;
+      width: 100%;
+      margin: 0;
+    }
+    @media only screen and (max-width: 600px) {
+      height: 80vw;
+    }
+
+    input {
+      width: 17vw;
+      background-color: #e8ebed;
+      border: 1px solid rgb(196, 194, 194);
+      min-height: 20px;
+      font-size: 1.25vw;
+      padding: 0.1rem;
+      padding-left: 0.6rem;
+      height: 2.2vw;
+
+      @media only screen and (max-width: 850px) {
+        width: 50vw;
+        height: 4vw;
+        font-size: 2vw;
+      }
+
+      @media only screen and (max-width: 600px) {
+        width: 80vw;
+        height: 6vw;
+        font-size: 3vw;
+      }
+    }
+
+    .priceField,
+    .endDateField {
+      width: 17vw;
+      background-color: #e8ebed;
+      border: 1px solid rgb(196, 194, 194);
+      min-height: 20px;
+      font-size: 1.25vw;
+      padding: 0.1rem;
+      padding-left: 0.6rem;
+      color: gray;
+      height: 2.2vw;
+
+      @media only screen and (max-width: 850px) {
+        width: 50vw;
+        height: 4vw;
+        font-size: 2vw;
+      }
+
+      @media only screen and (max-width: 600px) {
+        width: 80vw;
+        height: 6vw;
+        font-size: 3vw;
+      }
+    }
+
+    .buttonContainer {
+      display: flex;
+      justify-content: center;
+
+      button {
+        padding: 0.375vw 0.75vw;
+      }
+    }
+  }
+}
